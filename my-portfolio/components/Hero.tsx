@@ -1,96 +1,163 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import TypewriterEffect from "./TypewriterEffect";
+import Link from "next/link";
 
-interface HeroProps {
-  text?: string;
-  imageSrc?: string;
-}
+// 1. Static Import of the Images to bypass GitHub Pages basePath issues
+import profilePic from "@/public/SelfPotrait.png";
+import doodleSvg from "@/public/Doodle.svg";
 
-export default function Hero({
-  text = "MAYBE THERE IS SOMETHING INTERESTING HERE, PLEASE TAKE A LOOK AROUND • ",
-  imageSrc = "/SelfPotrait.png" // User's profile photo
-}: HeroProps) {
+export default function Hero() {
 
-  const characters = text.split("");
-  // Radius for the 3D text orbit
-  const radius = 120;
+  const characters = "MAYBE THERE IS SOMETHING INTERESTING HERE, PLEASE TAKE A LOOK AROUND • ".split("");
+  const radius = 190;
+
+  // Hover states (separated carefully)
+  const [isPhotoHovered, setIsPhotoHovered] = useState(false);
+  const [showCV, setShowCV] = useState(false);
 
   return (
-    <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden px-6">
+    <section className="relative w-full h-[calc(100vh-6rem)] flex flex-col items-center justify-start overflow-hidden px-6 pt-0 pb-0">
 
-      {/* Doodle Pattern for Light Mode (Concentric Dashed Circles) */}
+      {/* Light Mode Doodle Pattern */}
       <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none dark:hidden opacity-30">
         <svg viewBox="0 0 400 400" className="w-full h-full max-w-2xl max-h-2xl animate-[spin_60s_linear_infinite]" fill="none" stroke="currentColor" strokeWidth="2">
           <circle cx="200" cy="200" r="100" strokeDasharray="10 10" />
           <circle cx="200" cy="200" r="150" strokeDasharray="15 15" />
           <circle cx="200" cy="200" r="200" strokeDasharray="20 20" />
-          <circle cx="200" cy="200" r="250" strokeDasharray="5 25" />
-          <path d="M 200 0 L 200 400 M 0 200 L 400 200" strokeDasharray="5 5" className="opacity-50" />
         </svg>
       </div>
 
-      <div className="w-full max-w-6xl flex flex-col-reverse md:flex-row items-center justify-between gap-12 z-10 pt-10">
+      {/* 1. TOP CENTER: Main Text & Badge */}
+      <motion.div
+        className="relative text-center flex flex-col items-center z-10 mt-8 md:mt-12"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        {/* Badge Module */}
+        <div className="relative inline-flex items-center px-5 py-2 mb-6 rounded-full bg-slate-900 dark:bg-white/10 backdrop-blur-md shadow-lg text-sm font-bold text-white dark:text-slate-200">
+          📍 Gianyar, Bali
+          {/* Orange Accent Doodles */}
+          <svg className="absolute -top-6 -right-5 w-8 h-8 text-orange-400" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v4m0 0l-2-2m2 2l2-2" />
+          </svg>
+        </div>
 
-        {/* Introductory Text (Left aligned on Desktop) */}
+        <h1 className="text-5xl md:text-7xl font-black text-foreground">
+          I'm <span className="text-royal-blue dark:text-sky-blue">Rahtu Anom,</span>
+        </h1>
+
+        {/* Orange Curve Doodles (Complimentary color) */}
+        <svg className="absolute -left-12 -bottom-10 w-20 h-20 text-orange-400 opacity-80" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="4">
+          <path d="M 20 20 Q 50 80 80 20" strokeLinecap="round" />
+          <path d="M 30 10 Q 50 60 70 10" strokeLinecap="round" />
+        </svg>
+      </motion.div>
+
+      {/* 2. MIDDLE (ABSOLUTE): Left Description & Right Typewriter */}
+      <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-between z-10 max-w-7xl mx-auto w-full px-6 pointer-events-none mt-40 md:mt-0">
+
+        {/* Left Side: Description */}
         <motion.div
-          className="flex-1 text-center md:text-left"
+          className="flex justify-start items-center text-left pointer-events-auto w-full md:w-auto mt-32 md:mt-0"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <div className="inline-block px-4 py-1.5 mb-4 rounded-full bg-white/20 dark:bg-white/10 backdrop-blur-md border border-white/40 shadow-sm text-sm font-bold text-royal-blue dark:text-sky-blue">
-            📍 Gianyar, Bali
-          </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-royal-blue to-sky-blue mb-4">
-            Hi, I'm Rahtu Anom
-          </h1>
-          <h2 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-slate-200 mb-6">
-            Visual Data Storyteller.
-          </h2>
-          <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed font-medium mb-8 max-w-2xl">
-            Lulusan Teknologi Informasi Universitas Udayana yang sangat antusias dengan AI, Data, dan Web Development. Mulai dari melatih model *Machine Learning* hingga ngoprek OS Linux di "laptop kentang" demi bisa *survive* ngoding. Di luar layar, saya juga hobi menangkap momen lewat lensa fotografi.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start mt-4">
-            <button className="px-8 py-4 rounded-xl font-bold transition-all duration-300 bg-white border-2 border-slate-900 shadow-[4px_4px_0_0_#0f172a] hover:shadow-[6px_6px_0_0_#0f172a] hover:-translate-y-1 text-slate-900 dark:bg-royal-blue dark:border-transparent dark:text-white dark:shadow-lg dark:hover:shadow-xl dark:hover:bg-royal-blue/90 dark:rounded-full">
-              Lihat Project
-            </button>
-            <button className="px-8 py-4 rounded-xl font-bold transition-all duration-300 bg-sky-200 border-2 border-slate-900 shadow-[4px_4px_0_0_#0f172a] hover:shadow-[6px_6px_0_0_#0f172a] hover:-translate-y-1 text-slate-900 dark:bg-white/20 dark:backdrop-blur-md dark:border-white/40 dark:text-foreground dark:shadow-lg dark:hover:shadow-xl dark:hover:bg-white/30 dark:rounded-full">
-              Hubungi Saya
-            </button>
+          <div className="max-w-xs relative pl-6 md:pl-0">
+            <div className="text-5xl text-slate-400 dark:text-slate-500 mb-1 font-serif leading-none opacity-50 absolute -top-6 left-0 md:-left-6">“</div>
+            <p className="text-sm text-slate-700 dark:text-slate-300 font-medium leading-relaxed relative z-10">
+              Visual Data Storyteller yang antusias dengan AI dan Web Development. Terbiasa survive ngoding pakai laptop kentang dan menangkap momen lewat lensa fotografi.
+            </p>
           </div>
         </motion.div>
 
-        {/* Profile Image with 3D Text (Right aligned on Desktop) */}
+        {/* Right Side: Typewriter */}
         <motion.div
-          className="relative flex items-center justify-center h-72 w-72 md:h-96 md:w-96 flex-shrink-0 perspective-[1000px]"
-          style={{ transformStyle: "preserve-3d" }}
+          className="flex justify-end items-center pointer-events-auto w-full md:w-auto mt-8 md:mt-0"
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
+          <TypewriterEffect />
+        </motion.div>
+
+      </div>
+
+      {/* HERO IMAGE */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 flex items-end justify-center pointer-events-none">
+        <motion.div
+          className="relative flex items-center justify-center h-72 w-72 md:h-[450px] md:w-[450px] pointer-events-auto"
+          style={{ perspective: "1000px", transformStyle: "preserve-3d", willChange: "auto" }}
+          animate={{ scale: isPhotoHovered ? 1.05 : 1, y: isPhotoHovered ? -10 : 0 }}
+          transition={{ duration: 0.4, type: "spring", stiffness: 200, damping: 20 }}
+          onMouseEnter={() => setIsPhotoHovered(true)}
+          onMouseLeave={() => setIsPhotoHovered(false)}
+        >
+          {/* Dark Mode Glow Effect */}
+          <div
+            className={`absolute inset-10 rounded-full bg-white/30 blur-3xl transition-opacity duration-500 pointer-events-none hidden dark:block ${isPhotoHovered ? 'opacity-100' : 'opacity-0'}`}
+            style={{ transform: "translateZ(-50px)" }}
+          ></div>
+
+          {/* Light Mode Pop-up Doodles */}
+          <AnimatePresence>
+            {isPhotoHovered && (
+              <motion.div
+                key="doodle-pop"
+                initial={{ opacity: 0, scale: 0.5, rotate: -20, z: -100 }}
+                animate={{ opacity: 1, scale: 1.3, rotate: 0, z: -100 }}
+                exit={{ opacity: 0, scale: 1.5, rotate: 20, z: -100 }}
+                transition={{ duration: 0.5, type: "spring" }}
+                className="absolute -inset-20 dark:hidden pointer-events-none"
+              >
+                <Image
+                  src={doodleSvg}
+                  alt="Lightmode Doodle"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* The Hero Image (Placed exactly at Z=0 to intersect the 3D space) */}
+          <div className="absolute bottom-0 flex items-end justify-center pointer-events-none" style={{ transform: "translateZ(-50px)" }}>
+            <Image
+              src={profilePic}
+              alt="Profile Photo"
+              width={450}
+              height={450}
+              className="object-contain drop-shadow-2xl"
+              priority
+            />
+          </div>
+
           {/* 3D Halo Text Effect */}
           <div
-            className="absolute inset-0 flex items-center justify-center"
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{
               transformStyle: "preserve-3d",
-              transform: "rotateX(-5deg) rotateZ(10deg) translateY(-25px) scale(1)", // Tilt slightly
+              transform: "rotateX(-10deg) rotateZ(5deg) translateY(-30px)",
             }}
           >
             <motion.div
               className="relative flex items-center justify-center"
               style={{ transformStyle: "preserve-3d" }}
-              animate={{ rotateY: -360 }} // Orbit counter-clockwise
-              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              animate={{ rotateY: -360 }}
+              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
             >
               {characters.map((char, i) => {
                 const angle = (i * 360) / characters.length;
                 return (
                   <span
                     key={i}
-                    className="absolute text-sm font-bold tracking-widest text-royal-blue dark:text-sky-blue drop-shadow-md"
+                    className="absolute text-sm font-black tracking-widest text-sky-500 dark:text-sky-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] dark:drop-shadow-md"
                     style={{
                       transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
                       transformStyle: "preserve-3d",
@@ -104,23 +171,64 @@ export default function Hero({
             </motion.div>
           </div>
 
-          {/* Image without border circles */}
-          <div
-            className="absolute inset-0 overflow-visible flex items-end justify-center"
-            style={{ transform: "translateZ(0px)" }}
-          >
-            <Image
-              src={imageSrc}
-              alt="Profile Photo"
-              width={400}
-              height={400}
-              className="object-contain scale-130 drop-shadow-2xl"
-              priority
-            />
-          </div>
         </motion.div>
-
       </div>
+
+      {/* BUTTON GROUP (Placed at absolute bottom, overlapping the chest of the photo) */}
+      <motion.div
+        className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 flex items-center p-2 rounded-full border-2 border-slate-200 dark:border-white/10 bg-white/80 dark:bg-black/60 backdrop-blur-md shadow-2xl z-40 pointer-events-auto"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.6 }}
+      >
+        <div className="relative">
+          <button
+            onClick={() => setShowCV(!showCV)}
+            className="px-6 py-3 md:px-8 md:py-3 rounded-full font-bold transition-all duration-300 bg-sky-400 text-white shadow-[2px_2px_0_0_#0f172a] hover:shadow-[4px_4px_0_0_#0f172a] hover:-translate-y-1 dark:shadow-md dark:hover:shadow-lg flex items-center gap-2 border-2 border-slate-900 dark:border-transparent z-50 relative"
+          >
+            Download CV
+            <motion.svg
+              animate={{ rotate: showCV ? 180 : 0 }}
+              className="w-4 h-4"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+            </motion.svg>
+          </button>
+
+          {/* Drop-up CV Menu */}
+          <AnimatePresence>
+            {showCV && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                className="absolute bottom-[calc(100%+10px)] left-0 bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-700 rounded-2xl shadow-[4px_4px_0_0_#0f172a] dark:shadow-xl overflow-hidden flex flex-col w-52 z-[60]"
+              >
+                <a
+                  href="/CV-English-Rahtu-Anom.pdf"
+                  download
+                  className="px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-sm border-b border-slate-200 dark:border-slate-800 transition-colors flex items-center gap-2"
+                >
+                  🇺🇸 CV English
+                </a>
+                <a
+                  href="/CV-Indonesian-Rahtu-Anom.pdf"
+                  download
+                  className="px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-sm transition-colors flex items-center gap-2"
+                >
+                  🇮🇩 CV Indonesian
+                </a>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        <Link href="/projects" className="px-6 py-3 md:px-8 md:py-3 rounded-full font-bold transition-all duration-300 text-slate-700 dark:text-slate-300 hover:text-royal-blue dark:hover:text-white">
+          Portfolio ↗
+        </Link>
+      </motion.div>
+
     </section>
   );
 }

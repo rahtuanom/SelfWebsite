@@ -10,7 +10,7 @@ interface HeroProps {
 }
 
 export default function Hero({
-  text = "MAYBE THERE IS SOMETHING INTERESTING HERE, DONT BE SHY TO LOOK AROUND• ",
+  text = "MAYBE THERE IS SOMETHING INTERESTING HERE, PLEASE TAKE A LOOK AROUND • ",
   imageSrc = "/SelfPotrait.png" // User's profile photo
 }: HeroProps) {
 
@@ -20,7 +20,7 @@ export default function Hero({
 
   return (
     <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden px-6">
-      
+
       {/* Doodle Pattern for Light Mode (Concentric Dashed Circles) */}
       <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none dark:hidden opacity-30">
         <svg viewBox="0 0 400 400" className="w-full h-full max-w-2xl max-h-2xl animate-[spin_60s_linear_infinite]" fill="none" stroke="currentColor" strokeWidth="2">

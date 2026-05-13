@@ -39,20 +39,20 @@ export default function Hero() {
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         {/* Badge Module */}
-        <div className="relative inline-flex items-center px-5 py-2 mb-6 rounded-full bg-slate-900 dark:bg-white/10 backdrop-blur-md shadow-lg text-sm font-bold text-white dark:text-slate-200">
+        <div className="relative inline-flex items-center px-5 py-2 mb-6 rounded-none dark:rounded-full bg-yellow-400 border-[3px] border-black shadow-[4px_4px_0px_0px_#000] dark:bg-white/10 dark:border-0 dark:shadow-lg dark:backdrop-blur-md text-sm font-bold text-black dark:text-slate-200">
           📍 Gianyar, Bali
           {/* Orange Accent Doodles */}
-          <svg className="absolute -top-6 -right-5 w-8 h-8 text-orange-400" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+          <svg className="absolute -top-6 -right-5 w-8 h-8 text-black dark:text-orange-400" fill="none" stroke="currentColor" strokeWidth="4" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v4m0 0l-2-2m2 2l2-2" />
           </svg>
         </div>
 
         <h1 className="text-5xl md:text-7xl font-black text-foreground">
-          I'm <span className="text-royal-blue dark:text-sky-blue">Rahtu Anom,</span>
+          I'm <span className="text-pink-500 dark:text-sky-blue">Rahtu Anom,</span>
         </h1>
 
         {/* Orange Curve Doodles (Complimentary color) */}
-        <svg className="absolute -left-12 -bottom-10 w-20 h-20 text-orange-400 opacity-80" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="4">
+        <svg className="absolute -left-12 -bottom-10 w-20 h-20 text-black dark:text-orange-400 opacity-100 dark:opacity-80" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="5">
           <path d="M 20 20 Q 50 80 80 20" strokeLinecap="round" />
           <path d="M 30 10 Q 50 60 70 10" strokeLinecap="round" />
         </svg>
@@ -176,7 +176,7 @@ export default function Hero() {
 
       {/* BUTTON GROUP (Placed at absolute bottom, overlapping the chest of the photo) */}
       <motion.div
-        className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 flex items-center p-2 rounded-full border-2 border-slate-200 dark:border-white/10 bg-white/80 dark:bg-black/60 backdrop-blur-md shadow-2xl z-40 pointer-events-auto"
+        className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 flex items-center p-2 rounded-none dark:rounded-full border-[3px] border-black dark:border-white/10 bg-white dark:bg-black/60 dark:backdrop-blur-md shadow-[8px_8px_0px_0px_#000] dark:shadow-2xl z-40 pointer-events-auto"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.6 }}
@@ -184,15 +184,15 @@ export default function Hero() {
         <div className="relative">
           <button
             onClick={() => setShowCV(!showCV)}
-            className="px-6 py-3 md:px-8 md:py-3 rounded-full font-bold transition-all duration-300 bg-sky-400 text-white shadow-[2px_2px_0_0_#0f172a] hover:shadow-[4px_4px_0_0_#0f172a] hover:-translate-y-1 dark:shadow-md dark:hover:shadow-lg flex items-center gap-2 border-2 border-slate-900 dark:border-transparent z-50 relative"
+            className="px-6 py-3 md:px-8 md:py-3 rounded-none dark:rounded-full font-bold transition-all duration-200 bg-cyan-400 dark:bg-sky-400 text-black dark:text-white shadow-[4px_4px_0px_0px_#000] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] dark:shadow-md dark:hover:shadow-lg dark:hover:-translate-y-1 dark:hover:translate-x-0 flex items-center gap-2 border-[3px] border-black dark:border-transparent z-50 relative"
           >
             Download CV
             <motion.svg
               animate={{ rotate: showCV ? 180 : 0 }}
               className="w-4 h-4"
-              fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
             </motion.svg>
           </button>
 
@@ -203,19 +203,19 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 10, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                className="absolute bottom-[calc(100%+10px)] left-0 bg-white dark:bg-slate-900 border-2 border-slate-900 dark:border-slate-700 rounded-2xl shadow-[4px_4px_0_0_#0f172a] dark:shadow-xl overflow-hidden flex flex-col w-52 z-[60]"
+                className="absolute bottom-[calc(100%+10px)] left-0 bg-white dark:bg-slate-900 border-[3px] border-black dark:border-slate-700 rounded-none dark:rounded-2xl shadow-[6px_6px_0px_0px_#000] dark:shadow-xl overflow-hidden flex flex-col w-52 z-[60]"
               >
                 <a
-                  href="/CV-English-Rahtu-Anom.pdf"
+                  href="/SelfWebsite/CV_FIXED_ENG.pdf"
                   download
-                  className="px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-sm border-b border-slate-200 dark:border-slate-800 transition-colors flex items-center gap-2"
+                  className="px-4 py-3 hover:bg-yellow-400 dark:hover:bg-slate-800 text-black dark:text-slate-200 font-bold text-sm border-b-[3px] border-black dark:border-b dark:border-slate-800 transition-colors flex items-center gap-2"
                 >
                   🇺🇸 CV English
                 </a>
                 <a
-                  href="/CV-Indonesian-Rahtu-Anom.pdf"
+                  href="/SelfWebsite/CV_FIXED_IND.pdf"
                   download
-                  className="px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-sm transition-colors flex items-center gap-2"
+                  className="px-4 py-3 hover:bg-yellow-400 dark:hover:bg-slate-800 text-black dark:text-slate-200 font-bold text-sm transition-colors flex items-center gap-2"
                 >
                   🇮🇩 CV Indonesian
                 </a>
@@ -224,7 +224,7 @@ export default function Hero() {
           </AnimatePresence>
         </div>
 
-        <Link href="/projects" className="px-6 py-3 md:px-8 md:py-3 rounded-full font-bold transition-all duration-300 text-slate-700 dark:text-slate-300 hover:text-royal-blue dark:hover:text-white">
+        <Link href="/projects" className="px-6 py-3 md:px-8 md:py-3 rounded-none dark:rounded-full font-bold transition-all duration-200 text-black dark:text-slate-300 hover:bg-pink-400 border-[3px] border-transparent hover:border-black hover:shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 dark:hover:bg-transparent dark:hover:border-transparent dark:hover:shadow-none dark:hover:-translate-y-0 dark:hover:text-white">
           Portfolio ↗
         </Link>
       </motion.div>

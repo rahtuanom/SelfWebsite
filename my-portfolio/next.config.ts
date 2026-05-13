@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  
+  // Mengizinkan host Cloud IDE untuk HMR (Hot Module Replacement)
+  allowedDevOrigins: ['10.170.157.20'],
 };
 
 export default nextConfig;

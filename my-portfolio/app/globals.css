@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fdfbf7;
-  /* Creamy doff white for light mode */
-  --foreground: #0f172a;
-  /* Slate 900 */
+  --background: #ffffff;
+  /* Pure white for Neo-Brutalism light mode */
+  --foreground: #000000;
+  /* Pure black for stark contrast */
 }
 
 @theme inline {

@@ -11,6 +11,10 @@ Implementasikan sistem tema Dark/Light mode menggunakan variabel CSS.
 Semua animasi transisi harus menggunakan Framer Motion dan dukungan yang lebih bagus jika memungkinkan.
 Menyeimbangkan pada performa dan responsivitas dari tampilan.
 Selalu berikan komentar pada logika TypeScript yang kompleks agar dapat disesuaikan jika dibutuhkan oleh user.
-Anda harus mengingat bahwa proyek ini mengedepankan estetika visual tinggi dengan palet warna Biru (Sky, Royal, Space) dan efek-efek inovatif seperti 3D Text Halo."
+Anda harus mengingat bahwa proyek ini mengedepankan estetika visual tinggi dan efek-efek inovatif seperti 3D Text Halo."
 
 Web ini adalah portfolio dan gallery dari user, maka dari itu buat halaman dan komponen yang dapat dimodifikasi oleh user dan memberikan saran dan masukan untuk mengembangkan portfolio agar tetap aestetik, terstruktur, dan elegan.
+
+Aturan Mode Visual:
+- **Dark Mode**: Gunakan gaya Elegan / Space / Glassmorphism dengan warna dominan biru gelap (Slate, Space Blue), Royal Blue, dan Sky Blue, serta efek cahaya (Glow/Blur) dan sudut melengkung.
+- **Light Mode**: Gunakan gaya murni Neo-Brutalism dengan warna dasar cerah/putih, sudut mengotak tajam (sharp edges), batas garis tebal (thick borders), bayangan padat (solid block shadows), dan bebas menggunakan warna aksen yang sangat kontras (kuning, merah terang, cyan, dll) untuk elemen interaktif. Transisi antar mode harus mulus menggunakan Framer Motion.

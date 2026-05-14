@@ -5,12 +5,12 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full py-8 mt-24 flex flex-col items-center justify-center z-10 relative">
+    <footer className="w-full py-8 mt-24 flex flex-col items-center justify-center z-0 relative">
       <div className="w-full max-w-4xl px-6 flex flex-col md:flex-row items-center justify-between gap-6 p-6 rounded-none dark:rounded-3xl transition-all duration-300 bg-white border-[3px] border-black shadow-[8px_8px_0px_0px_#000] dark:shadow-xl dark:backdrop-blur-md dark:bg-black/20 dark:border dark:border-white/10">
         <p className="text-sm font-bold text-black dark:text-slate-400 dark:font-medium">
           © {currentYear} Rahtu Anom. All rights reserved.
         </p>
-        
+
         <div className="flex gap-4">
           <Link href="https://github.com" target="_blank" className="p-3 rounded-none dark:rounded-full transition-all duration-200 bg-white hover:bg-cyan-400 border-[3px] border-black shadow-[4px_4px_0px_0px_#000] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] text-black dark:shadow-lg dark:hover:shadow-xl dark:hover:-translate-y-1 dark:hover:translate-x-0 dark:backdrop-blur-md dark:bg-white/5 dark:border dark:border-white/10 dark:text-slate-300 dark:hover:text-sky-blue dark:hover:bg-transparent">
             <span className="sr-only">GitHub</span>

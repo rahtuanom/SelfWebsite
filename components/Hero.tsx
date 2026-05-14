@@ -42,7 +42,7 @@ export default function Hero() {
         <div className="relative inline-flex items-center px-5 py-2 mb-6 rounded-none dark:rounded-full bg-yellow-400 border-[3px] border-black shadow-[4px_4px_0px_0px_#000] dark:bg-white/10 dark:border-0 dark:shadow-lg dark:backdrop-blur-md text-sm font-bold text-black dark:text-slate-200">
           📍 Gianyar, Bali
           {/* Orange Accent Doodles */}
-          <svg className="absolute -top-6 -right-5 w-8 h-8 text-black dark:text-orange-400" fill="none" stroke="currentColor" strokeWidth="4" viewBox="0 0 24 24">
+          <svg className="absolute -top-6 -right-5 w-8 h-8 text-black dark:text-orange-400" fill="none" stroke="orange" strokeWidth="4" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v4m0 0l-2-2m2 2l2-2" />
           </svg>
         </div>
@@ -52,7 +52,7 @@ export default function Hero() {
         </h1>
 
         {/* Orange Curve Doodles (Complimentary color) */}
-        <svg className="absolute -left-12 -bottom-10 w-20 h-20 text-black dark:text-orange-400 opacity-100 dark:opacity-80" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="5">
+        <svg className="absolute -left-12 -bottom-10 w-20 h-20 text-black dark:text-orange-400 opacity-100 dark:opacity-80" viewBox="0 0 100 100" fill="none" stroke="orange" strokeWidth="5">
           <path d="M 20 20 Q 50 80 80 20" strokeLinecap="round" />
           <path d="M 30 10 Q 50 60 70 10" strokeLinecap="round" />
         </svg>
@@ -210,14 +210,16 @@ export default function Hero() {
                   download
                   className="px-4 py-3 hover:bg-yellow-400 dark:hover:bg-slate-800 text-black dark:text-slate-200 font-bold text-sm border-b-[3px] border-black dark:border-b dark:border-slate-800 transition-colors flex items-center gap-2"
                 >
-                  🇺🇸 CV English
+                  <img src="https://flagcdn.com/us.svg" width="20" alt="US Flag" className="rounded-sm shadow-sm" />
+                  CV English
                 </a>
                 <a
                   href="/SelfWebsite/CV_FIXED_IND.pdf"
                   download
                   className="px-4 py-3 hover:bg-yellow-400 dark:hover:bg-slate-800 text-black dark:text-slate-200 font-bold text-sm transition-colors flex items-center gap-2"
                 >
-                  🇮🇩 CV Indonesian
+                  <img src="https://flagcdn.com/id.svg" width="20" alt="ID Flag" className="rounded-sm border border-slate-200 dark:border-slate-700 shadow-sm" />
+                  CV Indonesian
                 </a>
               </motion.div>
             )}

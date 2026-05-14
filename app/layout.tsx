@@ -42,7 +42,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light">
           <BackgroundOrnaments />
           <Navbar />
-          <div className="flex-grow flex flex-col pt-24 z-0">
+          <div className="flex-grow flex flex-col pt-24 z-10 relative">
             {children}
           </div>
           <Footer />

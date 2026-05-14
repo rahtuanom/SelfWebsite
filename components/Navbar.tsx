@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navItems = [
@@ -16,9 +16,51 @@ const navItems = [
 export default function Navbar() {
   const pathname = usePathname();
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+  const { scrollY } = useScroll();
+  const [hidden, setHidden] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Bersihkan timeout saat komponen unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    
+    // Clear timeout yang ada setiap kali user scroll
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    if (latest > previous && latest > 100) {
+      // Scroll kebawah -> Hide langsung
+      setHidden(true);
+    } else {
+      // Scroll keatas atau di puncak -> Munculkan
+      setHidden(false);
+      
+      // Jika tidak di puncak (top), auto-hide setelah 3 detik
+      if (latest > 100) {
+        timeoutRef.current = setTimeout(() => {
+          setHidden(true);
+        }, 3000);
+      }
+    }
+  });
 
   return (
-    <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-8 py-3 rounded-none dark:rounded-full transition-all duration-300 bg-white border-[3px] border-black shadow-[6px_6px_0px_0px_#000000] dark:shadow-2xl dark:backdrop-blur-xl dark:bg-black/30 dark:border dark:border-white/10">
+    <motion.nav 
+      variants={{
+        visible: { y: 0, opacity: 1 },
+        hidden: { y: "-150%", opacity: 0 },
+      }}
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-8 py-3 rounded-none dark:rounded-full transition-colors duration-300 bg-white border-[3px] border-black shadow-[6px_6px_0px_0px_#000000] dark:shadow-2xl dark:backdrop-blur-xl dark:bg-black/30 dark:border dark:border-white/10"
+    >
       <ul className="flex items-center gap-6 relative">
         {navItems.map((item) => {
           const isActive = pathname === item.path;
@@ -64,6 +106,6 @@ export default function Navbar() {
           <ThemeToggle />
         </li>
       </ul>
-    </nav>
+    </motion.nav>
   );
 }

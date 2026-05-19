@@ -17,6 +17,8 @@ export interface Experience {
   period: string;
   description: string;
   responsibilities?: string[];
+  logo?: string;
+  gallery?: string[];
 }
 
 export const projectsData: Project[] = [
@@ -184,7 +186,8 @@ export const educationAndBootcamps: Experience[] = [
       "Data Analysis (Capstone 1): Memimpin tugas prapemrosesan dan pembersihan data (data cleaning) untuk memastikan akurasi dataset. Berperan sebagai asisten Team Lead dalam menjaga efisiensi alur kerja analisis.",
       "Software Engineering (Capstone 2): Bertindak sebagai Team Lead yang mengelola timeline proyek dan memandu pengembangan aplikasi web fungsional. Menerapkan prinsip Front-End dan Back-End untuk menghasilkan produk digital yang terpadu.",
       "Keterampilan Utama: Kepemimpinan Tim (Team Management), Analisis Data, Full-Stack Development."
-    ]
+    ],
+    gallery: ["/SelfPotrait.png", "/projects/web_dev.png"]
   }
 ];
 
@@ -195,6 +198,8 @@ export const organizationsData: Experience[] = [
     organization: "PAKSI",
     period: "2023 - 2024",
     description: "Bertanggung jawab memimpin arah strategi publikasi, branding digital, manajemen konten, serta mengelola operasional pusat informasi internal organisasi.",
+    logo: "/logos/LOGOPAKSI.png",
+    gallery: ["/SelfPotrait.png", "/projects/ui_design.png", "/projects/data_science.png"],
     responsibilities: [
       "Mendesain strategi visual dan identitas brand PAKSI melalui feed & story Instagram yang konsisten.",
       "Memproduksi video profil/pengenalan fungsionaris sebagai sarana komunikasi efektif ke civitas akademika Udayana.",
@@ -208,6 +213,7 @@ export const organizationsData: Experience[] = [
     organization: "Program Studi Maestro (Tim Jurnalistik Fakultas Teknik)",
     period: "2023 - 2024",
     description: "Mengelola administrasi dan memfasilitasi jalur komunikasi strategis di dalam tim jurnalistik lingkungan Fakultas Teknik Universitas Udayana.",
+    logo: "/logos/LOGOMAESTRO.jpg",
     responsibilities: [
       "Mengawasi tata kelola arsip, rekam jejak surat menyurat, serta pendistribusian dokumen internal dan eksternal.",
       "Menjembatani dan memfasilitasi arus komunikasi antara Ketua dengan divisi internal maupun pihak eksternal, memastikan sinergi operasional berjalan lancar."
@@ -219,6 +225,7 @@ export const organizationsData: Experience[] = [
     organization: "KRSRI - ROBOTEC Universitas Udayana",
     period: "2021 - 2023",
     description: "Berperan aktif selama 3 tahun dalam divisi pemrograman khusus untuk Kontes Robot SAR Indonesia (KRSRI) pada Unit Kegiatan Mahasiswa Robotika.",
+    logo: "/logos/LOGOROBOTEC.png",
     responsibilities: [
       "Mengembangkan dan mengoptimalkan algoritma pergerakan dan navigasi robot otonom untuk simulasi maupun pertandingan nyata.",
       "Melakukan troubleshooting pada integrasi hardware dan software mikrokontroler saat sesi uji coba lintasan.",
@@ -231,6 +238,7 @@ export const organizationsData: Experience[] = [
     organization: "Himpunan Mahasiswa Teknologi Informasi (HMTI)",
     period: "2023",
     description: "Bertanggung jawab dalam merencanakan dan mengeksekusi program kerja yang memfasilitasi pemenuhan kebutuhan spiritual serta menjaga keseimbangan nilai-nilai moral fungsionaris.",
+    logo: "/logos/LOGOHMTI.jpg",
     responsibilities: [
       "Mengkoordinir kegiatan keagamaan rutin untuk mempererat solidaritas anggota lintas keyakinan.",
       "Memastikan penyisipan nilai religius dan etika dalam setiap pelaksanaan program kerja himpunan agar berjalan lancar.",

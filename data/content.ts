@@ -8,6 +8,7 @@ export interface Project {
   highlights?: string[];
   link?: string;
   image?: string;
+  gallery?: string[];
 }
 
 export interface Experience {
@@ -114,6 +115,7 @@ export const projectsData: Project[] = [
     category: "UI/UX Design",
     role: "UI/UX Designer",
     image: "/projects/TRABALI1.png",
+    gallery: ["/projects/TRABALI1.png", "/projects/TRABALI2.png"],
     description: "Mendesain purwarupa (prototype) aplikasi mobile direktori pariwisata Bali dengan pendekatan desain modern, estetik, dan fungsional berbasis deteksi lokasi pengguna.",
     techStack: ["Figma", "Wireframing", "Prototyping", "UX Research"],
     highlights: [
@@ -137,6 +139,7 @@ export const projectsData: Project[] = [
     category: "Design & Research",
     role: "Visual Researcher",
     image: "/projects/TECHNOSTRESS1.png",
+    gallery: ["/projects/TECHNOSTRESS1.png", "/projects/TECHNOSTRESS2.png"],
     description: "Memenangkan juara pertama kompetisi tingkat nasional oleh BEM Psikologi Universitas Jayabaya lewat karya visual yang membahas dampak stres akibat penggunaan media digital berlebih.",
     techStack: ["Graphic Design", "Psychological Research", "Data Storytelling"],
     highlights: [

@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
-import { galleryImages } from "./images";
+import { galleryImages, GalleryImage } from "./images";
 
 export default function Gallery() {
-  const [selectedImage, setSelectedImage] = useState<StaticImageData | null>(null);
+  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
 
   return (
     <PageTransition>
@@ -45,7 +45,7 @@ export default function Gallery() {
                 onClick={() => setSelectedImage(image)}
               >
                 <Image 
-                  src={image} 
+                  src={image.thumb} 
                   alt={`Gallery Photo ${index + 1}`} 
                   placeholder="blur"
                   className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" 
@@ -89,7 +89,7 @@ export default function Gallery() {
               onClick={(e) => e.stopPropagation()}
             >
               <Image
-                src={selectedImage}
+                src={selectedImage.full}
                 alt="Selected Full-size Photo"
                 placeholder="blur"
                 className="w-auto h-auto max-w-full max-h-[90vh] object-contain rounded-md"

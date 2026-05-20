@@ -113,6 +113,7 @@ export const projectsData: Project[] = [
     title: "TraBali - UI/UX Aplikasi Pariwisata",
     category: "UI/UX Design",
     role: "UI/UX Designer",
+    image: "/projects/TRABALI1.png",
     description: "Mendesain purwarupa (prototype) aplikasi mobile direktori pariwisata Bali dengan pendekatan desain modern, estetik, dan fungsional berbasis deteksi lokasi pengguna.",
     techStack: ["Figma", "Wireframing", "Prototyping", "UX Research"],
     highlights: [
@@ -135,6 +136,7 @@ export const projectsData: Project[] = [
     title: "Juara 1 Nasional - Infografis Technostress",
     category: "Design & Research",
     role: "Visual Researcher",
+    image: "/projects/TECHNOSTRESS1.png",
     description: "Memenangkan juara pertama kompetisi tingkat nasional oleh BEM Psikologi Universitas Jayabaya lewat karya visual yang membahas dampak stres akibat penggunaan media digital berlebih.",
     techStack: ["Graphic Design", "Psychological Research", "Data Storytelling"],
     highlights: [
@@ -146,6 +148,7 @@ export const projectsData: Project[] = [
     title: "Infografis Dampak Ekonomi Nyepi",
     category: "Design & Research",
     role: "Visual Researcher",
+    image: "/projects/NYEPI.png",
     description: "Mengangkat topik kebudayaan di festival Litfest Brawijaya dengan menganalisis penghematan energi nasional (hingga Rp17,4 Miliar) selama Hari Raya Nyepi.",
     techStack: ["Data Journalism", "Information Design"],
   },
@@ -154,6 +157,7 @@ export const projectsData: Project[] = [
     title: "Infografis Kripto: Anatomi Bitcoin",
     category: "Design & Research",
     role: "Visual Researcher",
+    image: "/projects/BITCOIN.png",
     description: "Mengeksplorasi konsep uang digital untuk Gammafest melalui media edukatif yang membedah mekanika Bitcoin dibandingkan mata uang konvensional.",
     techStack: ["Financial Tech", "Visual Design"],
   },
@@ -199,7 +203,7 @@ export const organizationsData: Experience[] = [
     period: "2023 - 2024",
     description: "Bertanggung jawab memimpin arah strategi publikasi, branding digital, manajemen konten, serta mengelola operasional pusat informasi internal organisasi.",
     logo: "/logos/LOGOPAKSI.png",
-    gallery: ["/SelfPotrait.png", "/projects/ui_design.png", "/projects/data_science.png"],
+    gallery: ["/projects/PAKSI1.png", "/projects/PAKSI2.png", "/projects/PAKSI3.png", "/projects/PAKSI4.png"],
     responsibilities: [
       "Mendesain strategi visual dan identitas brand PAKSI melalui feed & story Instagram yang konsisten.",
       "Memproduksi video profil/pengenalan fungsionaris sebagai sarana komunikasi efektif ke civitas akademika Udayana.",

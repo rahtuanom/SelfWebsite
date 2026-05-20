@@ -22,7 +22,7 @@ const experiences = [
   },
   {
     id: 3,
-    role: "Data & Software Engineering Trainee",
+    role: "Data & Software Engineering",
     company: "RevoU Academy (MSIB Kampus Merdeka)",
     date: "Agu 2023 - Des 2023",
     description: "Lulus dengan predikat memuaskan (92/100). Berperan ganda sebagai analis data yang menangani pembersihan data kotor (Data Cleaning), sekaligus Team Leader dalam pengembangan produk web (Full-stack) dengan metodologi Agile.",
@@ -32,7 +32,7 @@ const experiences = [
     id: 4,
     role: "S1 Teknologi Informasi",
     company: "Universitas Udayana",
-    date: "Angkatan 2021 (Target Lulus 2026)",
+    date: "Lulusan April 2026",
     description: "Mendalami arsitektur sistem informasi, penambangan data (Data Mining), hingga Computer Vision. Membangun fondasi algoritma yang kuat untuk pemecahan masalah teknikal kompleks secara sistematis.",
     highlight: "IPK: 3.67 / 4.00"
   }
@@ -41,13 +41,13 @@ const experiences = [
 export default function Experience() {
   return (
     <section className="relative w-full py-16 px-6 overflow-hidden">
-      
+
       {/* Doodle Pattern for Light Mode (Grid/Lined Paper) */}
       <div className="absolute inset-0 z-0 flex pointer-events-none dark:hidden opacity-20">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-slate-900"/>
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-slate-900" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)" />
@@ -84,7 +84,7 @@ export default function Experience() {
             >
               {/* Timeline Dot Indicator */}
               <div className="absolute -left-[41px] top-1 h-5 w-5 rounded-full bg-white dark:bg-slate-900 border-[4px] border-royal-blue dark:border-sky-blue shadow-[0_0_0_4px_rgba(255,255,255,1)] dark:shadow-[0_0_0_4px_rgba(15,23,42,1)] transition-transform duration-300 group-hover:scale-125 group-hover:bg-royal-blue dark:group-hover:bg-sky-blue"></div>
-              
+
               {/* Timeline Content Card */}
               <div className="p-6 rounded-2xl transition-all duration-300 bg-white border-2 border-slate-900 shadow-[4px_4px_0_0_#0f172a] group-hover:shadow-[6px_6px_0_0_#4169E1] group-hover:-translate-y-1 dark:bg-black/30 dark:backdrop-blur-xl dark:border-white/10 dark:shadow-md dark:group-hover:shadow-xl dark:group-hover:border-sky-blue/50">
                 <header className="mb-3">
@@ -98,11 +98,11 @@ export default function Experience() {
                     {exp.company}
                   </h4>
                 </header>
-                
+
                 <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm md:text-base mb-4">
                   {exp.description}
                 </p>
-                
+
                 <div className="pt-4 border-t-2 border-dashed border-slate-200 dark:border-white/10">
                   <span className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
                     <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>

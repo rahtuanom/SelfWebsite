@@ -9,6 +9,9 @@ export interface Project {
   link?: string;
   image?: string;
   gallery?: string[];
+  featured?: boolean;
+  featuredOrder?: number;
+  themeColor?: "blue" | "green" | "purple" | "orange" | "pink";
 }
 
 export interface Experience {
@@ -30,6 +33,9 @@ export const projectsData: Project[] = [
     role: "Data Scientist / NLP Engineer",
     description: "Merancang pipeline Natural Language Processing (NLP) end-to-end untuk memproses dan menganalisis lebih dari 100.000 data judul berita hasil scraping. Proyek ini bertujuan untuk memetakan struktur taksonomi teks secara otomatis.",
     techStack: ["Python", "Django", "Web Scraping", "NLP", "Machine Learning"],
+    featured: true,
+    featuredOrder: 1,
+    themeColor: "purple",
     highlights: [
       "Mengimplementasikan custom domain-based stopwords yang secara efektif menyaring noise jurnalistik.",
       "Mengembangkan model Machine Learning Agglomerative Hierarchical Clustering untuk pemetaan taksonomi teks.",
@@ -38,24 +44,26 @@ export const projectsData: Project[] = [
     ]
   },
   {
-    id: 2,
+    id: 8,
     title: "Analisis Prediksi Review Game Steam",
     category: "Data Science & Big Data",
     role: "Data Analyst",
     description: "Membangun model prediksi deret waktu (time-series) untuk memproyeksikan tren sentimen ulasan game harian di platform Steam, yang membantu memahami potensi kualitas dan rating game di masa depan.",
     techStack: ["Python", "ARIMA", "SARIMA", "Data Modeling", "Big Data"],
+    themeColor: "purple",
     highlights: [
       "Menggunakan model statistika tingkat lanjut (ARIMA & SARIMA) untuk memprediksi jumlah ulasan positif dan negatif.",
       "Menganalisis pergerakan tren data harian untuk menghasilkan wawasan prediktif berbasis data."
     ]
   },
   {
-    id: 3,
+    id: 9,
     title: "Sistem Informasi Rekam Medis Terintegrasi",
     category: "Web Development",
     role: "Full-Stack Developer",
     description: "Mengembangkan platform rekam medis berbasis web untuk administrasi rumah sakit yang memungkinkan pengelolaan data pasien secara dinamis.",
     techStack: ["HTML/CSS", "Bootstrap", "JavaScript", "Backend Integration"],
+    themeColor: "blue",
     highlights: [
       "Membangun arsitektur Full-Stack dasar dengan fungsionalitas CRUD (Create, Read, Update, Delete) yang solid.",
       "Mengimplementasikan fitur pencetakan data otomatis (print-ready) untuk pelaporan medis."
@@ -68,6 +76,9 @@ export const projectsData: Project[] = [
     role: "Front-End Developer",
     description: "Berpartisipasi dalam kompetisi Microsoft Elevate Hackathon, membangun solusi digital kolaboratif dalam lingkungan kerja bertempo cepat (agile).",
     techStack: ["Front-End Development", "UI/UX Design", "System Integration"],
+    featured: true,
+    featuredOrder: 2,
+    themeColor: "pink",
     highlights: [
       "Merancang dan mengimplementasikan antarmuka (Front-End) yang sangat responsif dan berpusat pada pengalaman pengguna (User-Centric).",
       "Berkolaborasi lintas disiplin untuk memastikan integrasi sistem berjalan mulus dari desain hingga deployment."
@@ -80,6 +91,7 @@ export const projectsData: Project[] = [
     role: "AI Developer",
     description: "Membuat program pendeteksi dimensi fisik manusia secara real-time melalui tangkapan webcam menggunakan teknologi Computer Vision.",
     techStack: ["Python", "YOLO", "Pre-trained Models", "Computer Vision"],
+    themeColor: "purple",
     highlights: [
       "Memanfaatkan arsitektur YOLO untuk deteksi objek presisi tinggi.",
       "Mengimplementasikan pemetaan skeleton tubuh (pose estimation) untuk mengkalkulasi estimasi jarak dan tinggi badan manusia."
@@ -92,6 +104,7 @@ export const projectsData: Project[] = [
     role: "IoT Engineer",
     description: "Merancang sistem absensi fisik terpadu menggunakan perangkat keras mikrokontroler yang terhubung secara otomatis ke platform Telegram untuk pemantauan real-time.",
     techStack: ["RFID RC522", "ESP8266", "Telegram Bot API", "Database", "Security System"],
+    themeColor: "blue",
     highlights: [
       "Mengintegrasikan sensor RFID dengan modul WiFi ESP8266 untuk komunikasi data IoT.",
       "Membangun Bot Telegram fungsional sebagai antarmuka (interface) pemantauan log absensi bagi pengguna."
@@ -99,38 +112,45 @@ export const projectsData: Project[] = [
   },
   {
     id: 7,
-    title: "Aplikasi Mobile Pencatatan Keuangan",
+    title: "CASHOW: Aplikasi Mobile Pencatatan Keuangan",
     category: "Mobile Development",
     role: "Android Developer",
-    description: "Mengembangkan aplikasi mobile native Android untuk membantu pengguna mencatat histori finansial, memantau status kas, dan menghitung persentase surplus/defisit.",
+    image: "/projects/CASHOW.png",
+    description: "Mengembangkan aplikasi mobile native Android untuk membantu pengguna mencatat histori finansial dan memantau status kas.",
     techStack: ["Kotlin/Java", "Android Studio", "Mobile Database"],
+    themeColor: "blue",
     highlights: [
-      "Mengimplementasikan arsitektur CRUD pada lingkungan mobile app.",
-      "Mengintegrasikan logika komputasi finansial untuk kalkulasi margin keuntungan dan kerugian otomatis."
+      "Membangun aplikasi from scratch menggunakan android studio.",
+      "Mengimplementasikan metode CRUD pada lingkungan mobile app."
     ]
   },
   {
-    id: 8,
-    title: "TraBali - UI/UX Aplikasi Pariwisata",
+    id: 3,
+    title: "TraBali: Desain UI/UX Aplikasi Pariwisata",
     category: "UI/UX Design",
     role: "UI/UX Designer",
     image: "/projects/TRABALI1.png",
     gallery: ["/projects/TRABALI1.png", "/projects/TRABALI2.png"],
     description: "Mendesain purwarupa (prototype) aplikasi mobile direktori pariwisata Bali dengan pendekatan desain modern, estetik, dan fungsional berbasis deteksi lokasi pengguna.",
     techStack: ["Figma", "Wireframing", "Prototyping", "UX Research"],
+    themeColor: "green",
     highlights: [
       "Fokus pada eksplorasi estetika antarmuka (UI) yang memikat dengan alur pengalaman pengguna (UX) yang intuitif."
     ]
   },
   {
-    id: 9,
-    title: "Eksplorasi Data (EDA) Perpustakaan Udayana",
+    id: 2,
+    title: "Infografis: Eksplorasi Data Perpustakaan Udayana",
     category: "Data Analysis",
     role: "Data Analyst",
+    image: "/projects/PERPUS1.png",
+    gallery: ["/projects/PERPUS1.png", "/projects/PERPUS2.png", "/projects/PERPUS3.png", "/projects/PERPUS4.png", "/projects/PERPUS5.png", "/projects/PERPUS6.png", "/projects/PERPUS7.png", "/projects/PERPUS8.png"],
     description: "Menganalisis log harian pengunjung dari seluruh fakultas di Perpustakaan Universitas Udayana untuk menemukan pola kunjungan dan insight tersembunyi.",
     techStack: ["Data Visualization", "Exploratory Data Analysis (EDA)", "Statistics"],
+    themeColor: "purple",
     highlights: [
-      "Mengubah raw data menjadi argumen visual (infografis) yang mudah dipahami oleh audiens non-teknis."
+      "Mengubah raw data menjadi argumen visual (infografis) yang mudah dipahami oleh audiens non-teknis.",
+      "Membuat sebuah konten infografis yang dapat dipertimbangkan dalam media sosial informasi perpustakaan."
     ]
   },
   {
@@ -142,6 +162,9 @@ export const projectsData: Project[] = [
     gallery: ["/projects/TECHNOSTRESS1.png", "/projects/TECHNOSTRESS2.png"],
     description: "Memenangkan juara pertama kompetisi tingkat nasional oleh BEM Psikologi Universitas Jayabaya lewat karya visual yang membahas dampak stres akibat penggunaan media digital berlebih.",
     techStack: ["Graphic Design", "Psychological Research", "Data Storytelling"],
+    featured: true,
+    featuredOrder: 3,
+    themeColor: "orange",
     highlights: [
       "Menyajikan solusi berbasis riset yang kredibel lewat visualisasi data kreatif."
     ]
@@ -154,6 +177,7 @@ export const projectsData: Project[] = [
     image: "/projects/NYEPI.png",
     description: "Mengangkat topik kebudayaan di festival Litfest Brawijaya dengan menganalisis penghematan energi nasional (hingga Rp17,4 Miliar) selama Hari Raya Nyepi.",
     techStack: ["Data Journalism", "Information Design"],
+    themeColor: "green"
   },
   {
     id: 12,
@@ -163,6 +187,7 @@ export const projectsData: Project[] = [
     image: "/projects/BITCOIN.png",
     description: "Mengeksplorasi konsep uang digital untuk Gammafest melalui media edukatif yang membedah mekanika Bitcoin dibandingkan mata uang konvensional.",
     techStack: ["Financial Tech", "Visual Design"],
+    themeColor: "orange"
   },
   {
     id: 13,
@@ -171,6 +196,7 @@ export const projectsData: Project[] = [
     role: "Front-End Developer",
     description: "Situs portofolio modern yang menampilkan perjalanan karir, skill, dan proyek pribadi. Dibangun dengan fokus pada estetika tinggi, animasi dinamis, dan performa maksimal.",
     techStack: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    themeColor: "blue"
   },
   {
     id: 14,
@@ -179,6 +205,7 @@ export const projectsData: Project[] = [
     role: "Developer",
     description: "Eksplorasi teknologi secara berkelanjutan dan kompetitif dalam ekosistem Vibe Coding.",
     techStack: ["Agentic AI", "Modern Web Tech"],
+    themeColor: "purple"
   }
 ];
 

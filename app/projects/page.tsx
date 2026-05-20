@@ -14,6 +14,7 @@ export default function Projects() {
   const [activeFilter, setActiveFilter] = useState("Semua");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [fullscreenProjectImage, setFullscreenProjectImage] = useState<string | null>(null);
 
   // Fungsi untuk memetakan kategori project (string) ke Tab Filter
   const getFilterCategory = (category: string) => {
@@ -33,10 +34,90 @@ export default function Projects() {
     }
   };
 
+  // Helper untuk mendapatkan warna custom berdasarkan themeColor proyek
+  const getThemeStyles = (themeColor?: "blue" | "green" | "purple" | "orange" | "pink") => {
+    const color = themeColor || "blue";
+    const styles = {
+      blue: {
+        badge: "text-blue-600 dark:text-blue-400 bg-blue-600/10 dark:bg-blue-400/10",
+        titleHover: "group-hover:text-blue-600 dark:group-hover:text-blue-400",
+        hoverShadowPage: "hover:shadow-[8px_8px_0_0_#3b82f6]",
+        darkHoverBorder: "dark:hover:border-blue-500/50",
+        darkHoverShadow: "dark:hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]",
+        modalDot: "bg-blue-500",
+        modalBadge: "text-blue-600 dark:text-blue-400 bg-blue-600/10 dark:bg-blue-400/10",
+        modalHighlight: "bg-blue-600/10 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 border-blue-600/20 dark:border-blue-400/20",
+        detailLink: "text-blue-600 dark:text-blue-400",
+        hoverEye: "bg-blue-600 text-white dark:bg-blue-400 dark:text-slate-900 border-black dark:border-blue-300 shadow-[2px_2px_0_0_#000] dark:shadow-[0_0_10px_rgba(59,130,246,0.4)]",
+        hoverTech: "hover:bg-blue-600 dark:hover:bg-blue-400 hover:text-white dark:hover:text-slate-950",
+        thumbnailActive: "border-blue-600 dark:border-blue-400 scale-105 ring-2 ring-blue-600/20 dark:ring-blue-400/20"
+      },
+      green: {
+        badge: "text-emerald-600 dark:text-emerald-400 bg-emerald-600/10 dark:bg-emerald-400/10",
+        titleHover: "group-hover:text-emerald-600 dark:group-hover:text-emerald-400",
+        hoverShadowPage: "hover:shadow-[8px_8px_0_0_#10b981]",
+        darkHoverBorder: "dark:hover:border-emerald-500/50",
+        darkHoverShadow: "dark:hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]",
+        modalDot: "bg-emerald-500",
+        modalBadge: "text-emerald-600 dark:text-emerald-400 bg-emerald-600/10 dark:bg-emerald-400/10",
+        modalHighlight: "bg-emerald-600/10 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 border-emerald-600/20 dark:border-emerald-400/20",
+        detailLink: "text-emerald-600 dark:text-emerald-400",
+        hoverEye: "bg-emerald-600 text-white dark:bg-emerald-400 dark:text-slate-900 border-black dark:border-emerald-300 shadow-[2px_2px_0_0_#000] dark:shadow-[0_0_10px_rgba(16,185,129,0.4)]",
+        hoverTech: "hover:bg-emerald-600 dark:hover:bg-emerald-400 hover:text-white dark:hover:text-slate-950",
+        thumbnailActive: "border-emerald-600 dark:border-emerald-400 scale-105 ring-2 ring-emerald-600/20 dark:ring-emerald-400/20"
+      },
+      purple: {
+        badge: "text-purple-600 dark:text-purple-400 bg-purple-600/10 dark:bg-purple-400/10",
+        titleHover: "group-hover:text-purple-600 dark:group-hover:text-purple-400",
+        hoverShadowPage: "hover:shadow-[8px_8px_0_0_#a855f7]",
+        darkHoverBorder: "dark:hover:border-purple-500/50",
+        darkHoverShadow: "dark:hover:shadow-[0_0_20px_rgba(168,85,247,0.3)]",
+        modalDot: "bg-purple-500",
+        modalBadge: "text-purple-600 dark:text-purple-400 bg-purple-600/10 dark:bg-purple-400/10",
+        modalHighlight: "bg-purple-600/10 dark:bg-purple-900/50 text-purple-600 dark:text-purple-400 border-purple-600/20 dark:border-purple-400/20",
+        detailLink: "text-purple-600 dark:text-purple-400",
+        hoverEye: "bg-purple-600 text-white dark:bg-purple-400 dark:text-slate-900 border-black dark:border-purple-300 shadow-[2px_2px_0_0_#000] dark:shadow-[0_0_10px_rgba(168,85,247,0.4)]",
+        hoverTech: "hover:bg-purple-600 dark:hover:bg-purple-400 hover:text-white dark:hover:text-slate-950",
+        thumbnailActive: "border-purple-600 dark:border-purple-400 scale-105 ring-2 ring-purple-600/20 dark:ring-purple-400/20"
+      },
+      orange: {
+        badge: "text-amber-600 dark:text-amber-400 bg-amber-600/10 dark:bg-amber-400/10",
+        titleHover: "group-hover:text-amber-600 dark:group-hover:text-amber-400",
+        hoverShadowPage: "hover:shadow-[8px_8px_0_0_#f59e0b]",
+        darkHoverBorder: "dark:hover:border-amber-500/50",
+        darkHoverShadow: "dark:hover:shadow-[0_0_20px_rgba(245,158,11,0.3)]",
+        modalDot: "bg-amber-500",
+        modalBadge: "text-amber-600 dark:text-amber-400 bg-amber-600/10 dark:bg-amber-400/10",
+        modalHighlight: "bg-amber-600/10 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 border-amber-600/20 dark:border-amber-400/20",
+        detailLink: "text-amber-600 dark:text-amber-400",
+        hoverEye: "bg-amber-600 text-white dark:bg-amber-400 dark:text-slate-900 border-black dark:border-amber-300 shadow-[2px_2px_0_0_#000] dark:shadow-[0_0_10px_rgba(245,158,11,0.4)]",
+        hoverTech: "hover:bg-amber-600 dark:hover:bg-amber-400 hover:text-white dark:hover:text-slate-950",
+        thumbnailActive: "border-amber-600 dark:border-amber-400 scale-105 ring-2 ring-amber-600/20 dark:ring-amber-400/20"
+      },
+      pink: {
+        badge: "text-pink-600 dark:text-pink-400 bg-pink-600/10 dark:bg-pink-400/10",
+        titleHover: "group-hover:text-pink-600 dark:group-hover:text-pink-400",
+        hoverShadowPage: "hover:shadow-[8px_8px_0_0_#ec4899]",
+        darkHoverBorder: "dark:hover:border-pink-500/50",
+        darkHoverShadow: "dark:hover:shadow-[0_0_20px_rgba(236,72,153,0.3)]",
+        modalDot: "bg-pink-500",
+        modalBadge: "text-pink-600 dark:text-pink-400 bg-pink-600/10 dark:bg-pink-400/10",
+        modalHighlight: "bg-pink-600/10 dark:bg-pink-900/50 text-pink-600 dark:text-pink-400 border-pink-600/20 dark:border-pink-400/20",
+        detailLink: "text-pink-600 dark:text-pink-400",
+        hoverEye: "bg-pink-600 text-white dark:bg-pink-400 dark:text-slate-900 border-black dark:border-pink-300 shadow-[2px_2px_0_0_#000] dark:shadow-[0_0_10px_rgba(236,72,153,0.4)]",
+        hoverTech: "hover:bg-pink-600 dark:hover:bg-pink-400 hover:text-white dark:hover:text-slate-950",
+        thumbnailActive: "border-pink-600 dark:border-pink-400 scale-105 ring-2 ring-pink-600/20 dark:ring-pink-400/20"
+      }
+    };
+    return styles[color];
+  };
+
   // Filter project yang ditampilkan
   const filteredProjects = activeFilter === "Semua" 
     ? projectsData 
     : projectsData.filter(p => getFilterCategory(p.category) === activeFilter);
+
+  const modalTheme = selectedProject ? getThemeStyles(selectedProject.themeColor) : null;
 
   return (
     <PageTransition>
@@ -87,6 +168,7 @@ export default function Projects() {
               {filteredProjects.map((project, i) => {
                 const mappedCategory = getFilterCategory(project.category);
                 const imageSrc = project.image || getPlaceholderImage(mappedCategory);
+                const theme = getThemeStyles(project.themeColor);
 
                 return (
                   <motion.article
@@ -96,10 +178,16 @@ export default function Projects() {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9, y: -20 }}
                     transition={{ duration: 0.3, delay: i * 0.05 }}
-                    className="group flex flex-col h-full bg-white rounded-3xl border-2 border-slate-900 shadow-[6px_6px_0_0_#0f172a] hover:shadow-[8px_8px_0_0_#0f172a] hover:-translate-y-1 transition-all duration-300 overflow-hidden dark:bg-black/40 dark:backdrop-blur-xl dark:border-white/10 dark:shadow-xl dark:hover:shadow-2xl dark:hover:border-sky-blue/50"
+                    className={`group flex flex-col h-full bg-white rounded-3xl border-2 border-slate-900 shadow-[6px_6px_0_0_#0f172a] ${theme.hoverShadowPage} hover:-translate-y-1 transition-all duration-300 overflow-hidden dark:bg-black/40 dark:backdrop-blur-xl dark:border-white/10 dark:shadow-xl dark:hover:shadow-2xl ${theme.darkHoverBorder} ${theme.darkHoverShadow}`}
                   >
-                    {/* Gambar Proyek / Kategori */}
-                    <figure className="w-full h-52 relative overflow-hidden bg-slate-100 dark:bg-slate-900 border-b-2 border-slate-900 dark:border-white/10">
+                    {/* Gambar Proyek / Kategori (Klik untuk membuka Detail Pop-up) */}
+                    <figure 
+                      onClick={() => {
+                        setSelectedProject(project);
+                        setCurrentImageIndex(0);
+                      }}
+                      className="w-full h-52 relative overflow-hidden bg-slate-100 dark:bg-slate-900 border-b-2 border-slate-900 dark:border-white/10 cursor-pointer group/img"
+                    >
                       <Image 
                         src={imageSrc} 
                         alt={`Ilustrasi project ${project.title}`}
@@ -109,16 +197,33 @@ export default function Projects() {
                       />
                       {/* Overlay Glow Effect in Dark Mode */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent dark:from-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      
+                      {/* Hover Hint to Click Image */}
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 pointer-events-none">
+                        <div className={`text-xs font-black px-3.5 py-2 rounded-xl border-2 flex items-center gap-1.5 transform translate-y-2 group-hover/img:translate-y-0 transition-all duration-300 pointer-events-auto ${theme.hoverEye}`}>
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                          </svg>
+                          Lihat Detail
+                        </div>
+                      </div>
                     </figure>
 
                     <div className="p-6 flex flex-col flex-grow">
                       <div className="flex justify-between items-start mb-3 gap-2">
-                        <span className="text-xs font-black uppercase tracking-wider text-royal-blue dark:text-sky-blue bg-royal-blue/10 dark:bg-sky-blue/10 px-3 py-1 rounded-full">
+                        <span className={`text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full ${theme.badge}`}>
                           {project.category}
                         </span>
                       </div>
                       
-                      <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 line-clamp-2 leading-tight group-hover:text-royal-blue dark:group-hover:text-sky-blue transition-colors">
+                      <h2 
+                        onClick={() => {
+                          setSelectedProject(project);
+                          setCurrentImageIndex(0);
+                        }}
+                        className={`text-2xl font-bold text-slate-900 dark:text-white mb-3 line-clamp-2 leading-tight ${theme.titleHover} transition-colors cursor-pointer`}
+                      >
                         {project.title}
                       </h2>
                       
@@ -151,7 +256,7 @@ export default function Projects() {
                             setSelectedProject(project);
                             setCurrentImageIndex(0);
                           }}
-                          className="inline-flex items-center gap-1 text-royal-blue dark:text-sky-blue font-bold hover:underline group/link cursor-pointer bg-transparent border-0"
+                          className={`inline-flex items-center gap-1 ${theme.detailLink} font-bold hover:underline group/link cursor-pointer bg-transparent border-0`}
                         >
                           Detail
                           <svg className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -187,13 +292,13 @@ export default function Projects() {
               className="fixed inset-0 bg-black/70 backdrop-blur-md z-[100]"
             />
 
-            {/* Modal Card Centered */}
+            {/* Modal Card Centered (Flexible width max-w-6xl for premium landscape aspect ratio) */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 250 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-5xl h-[85vh] md:h-[80vh] bg-white dark:bg-slate-950 border-[3px] border-slate-900 dark:border-white/10 shadow-[8px_8px_0px_0px_#0f172a] dark:shadow-2xl rounded-3xl overflow-hidden z-[101] flex flex-col md:flex-row"
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-6xl max-h-[85vh] bg-white dark:bg-slate-950 border-[3px] border-slate-900 dark:border-white/10 shadow-[8px_8px_0px_0px_#0f172a] dark:shadow-2xl rounded-3xl overflow-hidden z-[101] flex flex-col md:flex-row"
             >
               {/* Close Button absolute top corner */}
               <button
@@ -206,10 +311,11 @@ export default function Projects() {
                 </svg>
               </button>
 
-              {/* SISI KIRI: Galeri Gambar / Carousel */}
-              <div className="w-full md:w-1/2 bg-slate-50 dark:bg-slate-900 border-b-[3px] md:border-b-0 md:border-r-[3px] border-slate-900 dark:border-white/10 p-6 flex flex-col items-center justify-center relative overflow-hidden h-[40%] md:h-full">
+              {/* SISI KIRI: Galeri Gambar / Carousel (Dibuat adaptif untuk foto non-1:1 / landscape, lebih lebar 60%) */}
+              <div className="w-full md:w-[60%] bg-slate-50 dark:bg-slate-900 border-b-[3px] md:border-b-0 md:border-r-[3px] border-slate-900 dark:border-white/10 p-6 flex flex-col items-center justify-center relative overflow-hidden aspect-[16/10] sm:aspect-[16/9] md:aspect-auto md:h-auto md:min-h-[500px] flex-shrink-0">
                 {selectedProject.gallery && selectedProject.gallery.length > 0 ? (
-                  <div className="relative w-full h-[80%] md:h-[70%] rounded-2xl overflow-hidden border-2 border-slate-900 dark:border-slate-800 bg-white dark:bg-black group shadow-md flex items-center justify-center">
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-slate-900 dark:border-slate-800 bg-white dark:bg-black group shadow-md flex items-center justify-center">
+                    
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={currentImageIndex}
@@ -217,15 +323,40 @@ export default function Projects() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="absolute inset-0"
+                        className="absolute inset-0 flex items-center justify-center"
                       >
+                        {/* Efek blurred background yang mewah untuk mengisi sisi kosong landscape */}
+                        <div className="absolute inset-0 filter blur-xl scale-110 opacity-30 select-none pointer-events-none">
+                          <Image
+                            src={selectedProject.gallery[currentImageIndex]}
+                            alt="Blurred background"
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+
+                        {/* Foto utama dipasang dengan object-contain agar utuh, tanpa cropping */}
                         <Image
                           src={selectedProject.gallery[currentImageIndex]}
                           alt={`${selectedProject.title} Gambar ${currentImageIndex + 1}`}
                           fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 100vw, 500px"
+                          className="object-contain relative z-10 cursor-zoom-in transition-transform hover:scale-[1.01]"
+                          sizes="(max-width: 768px) 100vw, 800px"
+                          onClick={() => setFullscreenProjectImage(selectedProject.gallery![currentImageIndex])}
                         />
+
+                        {/* Hover Overlay Zoom Indicator */}
+                        <div 
+                          onClick={() => setFullscreenProjectImage(selectedProject.gallery![currentImageIndex])}
+                          className="absolute inset-0 z-20 flex items-center justify-center bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-zoom-in"
+                        >
+                          <div className="bg-slate-900/90 text-white dark:bg-sky-blue dark:text-slate-900 text-xs font-black px-4 py-2 rounded-xl border-2 border-black dark:border-sky-300 shadow-[3px_3px_0_0_#000] dark:shadow-none flex items-center gap-1.5 transform scale-90 group-hover:scale-100 transition-all duration-300 pointer-events-auto">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                            </svg>
+                            Klik untuk memperbesar
+                          </div>
+                        </div>
                       </motion.div>
                     </AnimatePresence>
 
@@ -234,7 +365,7 @@ export default function Projects() {
                       <>
                         <button
                           onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? selectedProject.gallery!.length - 1 : prev - 1))}
-                          className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white dark:bg-black/80 dark:hover:bg-black border-2 border-slate-900 dark:border-slate-700 flex items-center justify-center text-slate-900 dark:text-white shadow cursor-pointer transition-all hover:scale-105 active:scale-95"
+                          className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white dark:bg-black/80 dark:hover:bg-black border-2 border-slate-900 dark:border-slate-700 flex items-center justify-center text-slate-900 dark:text-white shadow cursor-pointer transition-all hover:scale-105 active:scale-95 z-20"
                           aria-label="Previous Image"
                         >
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -243,7 +374,7 @@ export default function Projects() {
                         </button>
                         <button
                           onClick={() => setCurrentImageIndex((prev) => (prev + 1) % selectedProject.gallery!.length)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white dark:bg-black/80 dark:hover:bg-black border-2 border-slate-900 dark:border-slate-700 flex items-center justify-center text-slate-900 dark:text-white shadow cursor-pointer transition-all hover:scale-105 active:scale-95"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 hover:bg-white dark:bg-black/80 dark:hover:bg-black border-2 border-slate-900 dark:border-slate-700 flex items-center justify-center text-slate-900 dark:text-white shadow cursor-pointer transition-all hover:scale-105 active:scale-95 z-20"
                           aria-label="Next Image"
                         >
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -252,13 +383,13 @@ export default function Projects() {
                         </button>
 
                         {/* Indicators (Instagram Style) */}
-                        <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
+                        <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-20">
                           {selectedProject.gallery.map((_, idx) => (
                             <button
                               key={idx}
                               onClick={() => setCurrentImageIndex(idx)}
                               className={`h-2 rounded-full border border-slate-950 dark:border-white transition-all duration-300 cursor-pointer ${
-                                idx === currentImageIndex ? "w-5 bg-royal-blue dark:bg-sky-blue" : "w-2 bg-white/60 hover:bg-white"
+                                idx === currentImageIndex ? `w-5 ${modalTheme?.modalDot}` : "w-2 bg-white/60 hover:bg-white"
                               }`}
                               aria-label={`Go to slide ${idx + 1}`}
                             />
@@ -269,14 +400,37 @@ export default function Projects() {
                   </div>
                 ) : (
                   // Fallback Single Image
-                  <div className="relative w-full h-[85%] rounded-2xl overflow-hidden border-2 border-slate-900 dark:border-slate-800 bg-white dark:bg-black shadow-md flex items-center justify-center">
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-slate-900 dark:border-slate-800 bg-white dark:bg-black shadow-md flex items-center justify-center group">
+                    {/* Blurred background */}
+                    <div className="absolute inset-0 filter blur-xl scale-110 opacity-30 select-none pointer-events-none">
+                      <Image
+                        src={selectedProject.image || getPlaceholderImage(getFilterCategory(selectedProject.category))}
+                        alt="Blurred background"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                     <Image
                       src={selectedProject.image || getPlaceholderImage(getFilterCategory(selectedProject.category))}
                       alt={selectedProject.title}
                       fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 500px"
+                      className="object-contain relative z-10 cursor-zoom-in transition-transform hover:scale-[1.01]"
+                      sizes="(max-width: 768px) 100vw, 800px"
+                      onClick={() => setFullscreenProjectImage(selectedProject.image || getPlaceholderImage(getFilterCategory(selectedProject.category)))}
                     />
+
+                    {/* Hover Overlay Zoom Indicator */}
+                    <div 
+                      onClick={() => setFullscreenProjectImage(selectedProject.image || getPlaceholderImage(getFilterCategory(selectedProject.category)))}
+                      className="absolute inset-0 z-20 flex items-center justify-center bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-zoom-in"
+                    >
+                      <div className="bg-slate-900/90 text-white dark:bg-sky-blue dark:text-slate-900 text-xs font-black px-4 py-2 rounded-xl border-2 border-black dark:border-sky-300 shadow-[3px_3px_0_0_#000] dark:shadow-none flex items-center gap-1.5 transform scale-90 group-hover:scale-100 transition-all duration-300 pointer-events-auto">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                        </svg>
+                        Klik untuk memperbesar
+                      </div>
+                    </div>
                   </div>
                 )}
 
@@ -289,7 +443,7 @@ export default function Projects() {
                         onClick={() => setCurrentImageIndex(idx)}
                         className={`flex-shrink-0 w-16 h-12 rounded-lg relative overflow-hidden border-2 transition-all cursor-pointer ${
                           idx === currentImageIndex
-                            ? "border-royal-blue dark:border-sky-blue scale-105 ring-2 ring-royal-blue/20 dark:ring-sky-blue/20"
+                            ? `${modalTheme?.thumbnailActive}`
                             : "border-slate-300 dark:border-slate-800 hover:border-slate-900 dark:hover:border-slate-500 opacity-60 hover:opacity-100"
                         }`}
                       >
@@ -306,9 +460,9 @@ export default function Projects() {
                 )}
               </div>
 
-              {/* SISI KANAN: Detail Informasi */}
-              <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-start overflow-y-auto h-[60%] md:h-full bg-white dark:bg-slate-950 pr-4 md:pr-8">
-                <span className="inline-block text-xs font-black uppercase tracking-wider text-royal-blue dark:text-sky-blue bg-royal-blue/10 dark:bg-sky-blue/10 px-3 py-1 rounded-full w-fit mb-3 mt-2 md:mt-0">
+              {/* SISI KANAN: Detail Informasi (Lebih ramping 40% untuk mengimbangi gambar landscape yang lebar) */}
+              <div className="w-full md:w-[40%] p-6 md:p-8 flex flex-col justify-start overflow-y-auto bg-white dark:bg-slate-950 pr-4 md:pr-8">
+                <span className={`inline-block text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full w-fit mb-3 mt-2 md:mt-0 ${modalTheme?.modalBadge}`}>
                   {selectedProject.category}
                 </span>
 
@@ -346,7 +500,7 @@ export default function Projects() {
                     <ul className="space-y-3">
                       {selectedProject.highlights.map((highlight, idx) => (
                         <li key={idx} className="flex gap-3 items-start">
-                          <span className="flex-shrink-0 w-6 h-6 rounded-full bg-royal-blue/10 dark:bg-sky-900/50 flex items-center justify-center text-royal-blue dark:text-sky-blue font-black text-xs mt-0.5 border border-royal-blue/20 dark:border-sky-blue/20">
+                          <span className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center font-black text-xs mt-0.5 border ${modalTheme?.modalHighlight}`}>
                             {idx + 1}
                           </span>
                           <span className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed font-medium">
@@ -365,7 +519,7 @@ export default function Projects() {
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {selectedProject.techStack.map((tech) => (
-                      <span key={tech} className="text-xs font-bold px-2.5 py-1 bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded-lg border border-slate-200 dark:border-slate-700/80 hover:bg-royal-blue hover:text-white dark:hover:bg-sky-blue dark:hover:text-slate-950 transition-colors duration-200 cursor-default">
+                      <span key={tech} className={`text-xs font-bold px-2.5 py-1 bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded-lg border border-slate-200 dark:border-slate-700/80 ${modalTheme?.hoverTech} transition-colors duration-200 cursor-default`}>
                         {tech}
                       </span>
                     ))}
@@ -374,6 +528,48 @@ export default function Projects() {
               </div>
             </motion.div>
           </>
+        )}
+      </AnimatePresence>
+
+      {/* Lightbox Resolusi Penuh Gambar Proyek (Poped-up) */}
+      <AnimatePresence>
+        {fullscreenProjectImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 backdrop-blur-lg p-4 md:p-8"
+            onClick={() => setFullscreenProjectImage(null)}
+          >
+            {/* Close Button */}
+            <button
+              className="absolute top-6 right-6 z-[130] p-3 bg-white/10 hover:bg-white/20 hover:text-red-400 text-white rounded-full backdrop-blur-md transition-all cursor-pointer hover:scale-105 active:scale-95"
+              onClick={() => setFullscreenProjectImage(null)}
+              aria-label="Tutup resolusi penuh"
+            >
+              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative max-w-7xl w-full h-[85vh] rounded-2xl overflow-hidden flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={fullscreenProjectImage}
+                alt="Selected Project Full-size Photo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </PageTransition>

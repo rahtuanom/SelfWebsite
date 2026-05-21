@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 const experiences = [
   {
     id: 1,
-    role: "Freelance Developer & AI Enthusiast",
+    role: "Freelance & AI Enthusiast",
     company: "Open to Work / Available for Hire",
     date: "Sekarang (Present)",
     description: "Membawa kombinasi unik antara logika rekayasa perangkat lunak (Software Engineering) dan estetika antarmuka (UI/UX) untuk membangun solusi digital fungsional. Aktif mengeksplorasi ekosistem AI terapan dan arsitektur web modern.",
@@ -14,26 +14,26 @@ const experiences = [
   },
   {
     id: 2,
-    role: "NLP Engineer / Data Scientist (Skripsi)",
+    role: "NLP Engineer / Data Mining (Skripsi)",
     company: "Universitas Udayana",
-    date: "2024 - 2026",
+    date: "2025 - 2026",
     description: "Merancang dan mengeksekusi pipeline pemrosesan bahasa alami (NLP) end-to-end untuk memetakan taksonomi dari 100.000+ data teks. Mengoptimalkan noise reduction menggunakan custom stopwords dan Machine Learning clustering tingkat lanjut.",
     highlight: "Mendemonstrasikan keahlian analitis pada dataset berskala besar."
   },
   {
     id: 3,
     role: "Data & Software Engineering",
-    company: "RevoU Academy (MSIB Kampus Merdeka)",
+    company: "RevoU Academy (MSIB Kampus Merdeka Batch 5)",
     date: "Agu 2023 - Des 2023",
-    description: "Lulus dengan predikat memuaskan (92/100). Berperan ganda sebagai analis data yang menangani pembersihan data kotor (Data Cleaning), sekaligus Team Leader dalam pengembangan produk web (Full-stack) dengan metodologi Agile.",
-    highlight: "Kemampuan memimpin lintas disiplin (Data & Web)."
+    description: "Lulus dengan predikat memuaskan (92/100). Berperan ganda sebagai analis data yang menangani Data Cleaning, dan Memimpin dalam pengembangan produk web (Full-stack) sebagai project leader.",
+    highlight: "Kemampuan analisis & project leader (Data & Software Engineering)."
   },
   {
     id: 4,
     role: "S1 Teknologi Informasi",
     company: "Universitas Udayana",
-    date: "Lulusan April 2026",
-    description: "Mendalami arsitektur sistem informasi, penambangan data (Data Mining), hingga Computer Vision. Membangun fondasi algoritma yang kuat untuk pemecahan masalah teknikal kompleks secara sistematis.",
+    date: "Graduate: April 2026",
+    description: "Konsentrasi: Data Science - Mendalami arsitektur sistem informasi, Data Mining, Web Development. Membangun fondasi algoritma yang kuat untuk pemecahan masalah teknikal kompleks secara sistematis.",
     highlight: "IPK: 3.67 / 4.00"
   }
 ];
@@ -43,11 +43,11 @@ export default function Experience() {
     <section className="relative w-full py-16 px-6 overflow-hidden">
 
       {/* Doodle Pattern for Light Mode (Grid/Lined Paper) */}
-      <div className="absolute inset-0 z-0 flex pointer-events-none dark:hidden opacity-20">
+      <div className="absolute inset-0 z-0 flex pointer-events-none dark:hidden opacity-100">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-slate-900" />
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(15, 23, 42, 0.15)" strokeWidth="1.5" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)" />

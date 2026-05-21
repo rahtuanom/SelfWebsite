@@ -206,6 +206,22 @@ export const projectsData: Project[] = [
     description: "Eksplorasi teknologi secara berkelanjutan dan kompetitif dalam ekosistem Vibe Coding.",
     techStack: ["Agentic AI", "Modern Web Tech"],
     themeColor: "purple"
+  },
+  {
+    id: 15,
+    title: "Desain Konten & Feed Instagram KKN Desa Lebih",
+    category: "Graphic Design & Branding",
+    role: "Content Creator & Graphic Designer",
+    description: "Merancang identitas visual, template postingan, dan memproduksi konten kreatif untuk feed Instagram KKN Universitas Udayana di Desa Lebih, Gianyar. Fokus pada dokumentasi visual program kerja pengabdian secara komunikatif.",
+    techStack: ["Adobe Illustrator", "Canva", "Social Media Branding", "Copywriting"],
+    themeColor: "orange",
+    featured: true,
+    featuredOrder: 4,
+    highlights: [
+      "Menyusun tata letak feed Instagram (grid 3x3) yang estetis, rapi, dan informatif untuk mendokumentasikan kegiatan pengabdian masyarakat.",
+      "Membuat materi publikasi digital program kerja unggulan desa dan kegiatan sosial kemasyarakatan.",
+      "Meningkatkan jangkauan informasi dan interaksi akun KKN Desa Lebih melalui konsistensi gaya desain visual yang ramah pembaca."
+    ]
   }
 ];
 
@@ -228,7 +244,7 @@ export const educationAndBootcamps: Experience[] = [
 export const organizationsData: Experience[] = [
   {
     id: 1,
-    role: "Kepala Divisi Jurnalistik & Bursa",
+    role: "Kepala Bidang Jurnalistik & Bursa (Kepala Divisi)",
     organization: "PAKSI",
     period: "2023 - 2024",
     description: "Bertanggung jawab memimpin arah strategi publikasi, branding digital, manajemen konten, serta mengelola operasional pusat informasi internal organisasi.",

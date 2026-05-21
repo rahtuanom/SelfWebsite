@@ -3,72 +3,22 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { projectsData } from "@/data/content";
+import PremiumProjectCard from "./PremiumProjectCard";
+import LogoLoop from "./LogoLoop";
 
 export default function PortfolioPreview() {
-  // Ambil project yang ditandai featured dan diurutkan berdasarkan featuredOrder
+  const router = useRouter();
+  
+  // Ambil project yang ditandai featured dan diurutkan berdasarkan featuredOrder, batasi maksimal 3 project saja untuk estetika grid
   const topProjects = projectsData
     .filter((p) => p.featured)
-    .sort((a, b) => (a.featuredOrder || 99) - (b.featuredOrder || 99));
+    .sort((a, b) => (a.featuredOrder || 99) - (b.featuredOrder || 99))
+    .slice(0, 3);
 
-  const getFilterCategory = (category: string) => {
-    const lowerCat = category.toLowerCase();
-    if (lowerCat.includes("web") || lowerCat.includes("mobile") || lowerCat.includes("software")) return "Web & App";
-    if (lowerCat.includes("data") || lowerCat.includes("ai") || lowerCat.includes("artificial")) return "Data & AI";
-    if (lowerCat.includes("design") || lowerCat.includes("ui/ux")) return "UI/UX & Design";
-    return "Lainnya";
-  };
-
-  const getPlaceholderImage = (filterCategory: string) => {
-    switch (filterCategory) {
-      case "Data & AI": return "/projects/data_science.png";
-      case "UI/UX & Design": return "/projects/ui_design.png";
-      default: return "/projects/web_dev.png";
-    }
-  };
-
-  // Helper untuk mendapatkan warna custom berdasarkan themeColor proyek
-  const getThemeStyles = (themeColor?: "blue" | "green" | "purple" | "orange" | "pink") => {
-    const color = themeColor || "blue";
-    const styles = {
-      blue: {
-        badge: "text-blue-600 dark:text-blue-400 bg-blue-600/10 dark:bg-blue-400/10",
-        titleHover: "group-hover:text-blue-600 dark:group-hover:text-blue-400",
-        hoverShadow: "hover:shadow-[6px_6px_0_0_#3b82f6]",
-        darkHoverBorder: "dark:hover:border-blue-500/50",
-        darkHoverShadow: "dark:hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]",
-      },
-      green: {
-        badge: "text-emerald-600 dark:text-emerald-400 bg-emerald-600/10 dark:bg-emerald-400/10",
-        titleHover: "group-hover:text-emerald-600 dark:group-hover:text-emerald-400",
-        hoverShadow: "hover:shadow-[6px_6px_0_0_#10b981]",
-        darkHoverBorder: "dark:hover:border-emerald-500/50",
-        darkHoverShadow: "dark:hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]",
-      },
-      purple: {
-        badge: "text-purple-600 dark:text-purple-400 bg-purple-600/10 dark:bg-purple-400/10",
-        titleHover: "group-hover:text-purple-600 dark:group-hover:text-purple-400",
-        hoverShadow: "hover:shadow-[6px_6px_0_0_#a855f7]",
-        darkHoverBorder: "dark:hover:border-purple-500/50",
-        darkHoverShadow: "dark:hover:shadow-[0_0_20px_rgba(168,85,247,0.3)]",
-      },
-      orange: {
-        badge: "text-amber-600 dark:text-amber-400 bg-amber-600/10 dark:bg-amber-400/10",
-        titleHover: "group-hover:text-amber-600 dark:group-hover:text-amber-400",
-        hoverShadow: "hover:shadow-[6px_6px_0_0_#f59e0b]",
-        darkHoverBorder: "dark:hover:border-amber-500/50",
-        darkHoverShadow: "dark:hover:shadow-[0_0_20px_rgba(245,158,11,0.3)]",
-      },
-      pink: {
-        badge: "text-pink-600 dark:text-pink-400 bg-pink-600/10 dark:bg-pink-400/10",
-        titleHover: "group-hover:text-pink-600 dark:group-hover:text-pink-400",
-        hoverShadow: "hover:shadow-[6px_6px_0_0_#ec4899]",
-        darkHoverBorder: "dark:hover:border-pink-500/50",
-        darkHoverShadow: "dark:hover:shadow-[0_0_20px_rgba(236,72,153,0.3)]",
-      }
-    };
-    return styles[color];
+  const handleOpenDetails = () => {
+    router.push("/projects");
   };
 
   return (
@@ -115,48 +65,46 @@ export default function PortfolioPreview() {
           </motion.div>
         </div>
 
-        {/* 3 Grid Layout sama seperti halaman /projects */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {topProjects.map((project, index) => {
-            const mappedCategory = getFilterCategory(project.category);
-            const imageSrc = project.image || getPlaceholderImage(mappedCategory);
-            const theme = getThemeStyles(project.themeColor);
+        {/* Spot Atas: Tech Stack LogoLoop (Scrolling Kiri) */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-8 overflow-hidden rounded-2xl border border-slate-200/80 dark:border-white/5 bg-slate-50/30 dark:bg-slate-950/20 backdrop-blur-sm"
+        >
+          <LogoLoop direction="left" speed={35} />
+        </motion.div>
 
-            return (
-              <motion.article
-                key={project.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
-                className={`group flex flex-col h-full bg-white rounded-2xl border-2 border-slate-900 shadow-[4px_4px_0_0_#0f172a] ${theme.hoverShadow} hover:-translate-y-1 transition-all duration-300 overflow-hidden dark:bg-black/30 dark:backdrop-blur-xl dark:border-white/10 dark:shadow-md dark:hover:shadow-xl ${theme.darkHoverBorder} ${theme.darkHoverShadow}`}
-              >
-                <figure className="w-full h-40 relative overflow-hidden bg-slate-100 dark:bg-slate-900 border-b-2 border-slate-900 dark:border-white/10">
-                  <Image 
-                    src={imageSrc} 
-                    alt={`Ilustrasi project ${project.title}`}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent dark:from-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </figure>
-                
-                <div className="p-5 flex flex-col flex-grow">
-                  <span className={`text-[10px] md:text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full w-max mb-3 ${theme.badge}`}>
-                    {project.category}
-                  </span>
-                  <h3 className={`text-lg md:text-xl font-bold text-slate-900 dark:text-white line-clamp-2 leading-tight ${theme.titleHover} transition-colors mb-2`}>
-                    {project.title}
-                  </h3>
-                  <p className="text-slate-600 dark:text-slate-400 text-xs md:text-sm line-clamp-2 leading-relaxed">
-                    {project.description}
-                  </p>
-                </div>
-              </motion.article>
-            );
-          })}
+        {/* 3 Grid Layout yang telah di-upgrade dengan Premium3D Card & Spotlight */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {topProjects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              className="h-full"
+            >
+              <PremiumProjectCard
+                project={project}
+                onOpenDetails={handleOpenDetails}
+              />
+            </motion.div>
+          ))}
         </div>
+
+        {/* Spot Bawah: Tech Stack LogoLoop (Scrolling Kanan) */}
+        <motion.div
+          initial={{ opacity: 0, y: -15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mt-8 overflow-hidden rounded-2xl border border-slate-200/80 dark:border-white/5 bg-slate-50/30 dark:bg-slate-950/20 backdrop-blur-sm"
+        >
+          <LogoLoop direction="right" speed={35} />
+        </motion.div>
       </div>
     </section>
   );

@@ -32,10 +32,13 @@ export default function About() {
                 <span className="text-royal-blue dark:text-sky-blue">👋</span> Profil & Vibe
               </h2>
               <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4 text-lg">
-                Saya adalah mahasiswa tingkat akhir program studi Teknologi Informasi di Universitas Udayana. Saya memiliki minat mendalam pada pengembangan perangkat lunak modern, pemodelan kecerdasan buatan (AI), serta seni menyampaikan informasi berbasis data (<strong className="text-royal-blue dark:text-sky-blue">Visual Data Storytelling</strong>).
+                Saya adalah <strong className="text-slate-900 dark:text-white">I Gusti Ngurah Anom Hariyadi</strong> (akrab dipanggil <strong className="text-royal-blue dark:text-sky-blue">Anom</strong>). Lahir di Gianyar pada 18 April 2003, saya telah resmi diwisuda pada 18 April 2026 dari program studi Teknologi Informasi Universitas Udayana dengan spesialisasi <strong className="text-royal-blue dark:text-sky-blue">Data Science & NLP</strong>.
+              </p>
+              <p className="text-slate-700 dark:text-slate-300 leading-relaxed mb-4 text-lg">
+                Bagi saya, keterbatasan adalah katalis kreativitas. Berawal dari tantangan mengoptimalkan perangkat kuliah yang berspesifikasi rendah (<em>laptop kentang</em>), saya belajar otodidak mengelola sistem operasi alternatif ringan. Pengalaman ini membentuk insting pemecahan masalah saya yang kuat dan kemahiran menggunakan sistem operasi <strong className="text-royal-blue dark:text-sky-blue">Linux</strong> untuk kebutuhan produktivitas harian.
               </p>
               <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg">
-                Di luar ranah teknikal, saya gemar mengeksplorasi dunia fotografi dan desain grafis. Kemampuan saya dalam mengelola dan memecahkan masalah sistem operasi Linux tumbuh dari proses belajar otodidak, yang melatih saya untuk selalu adaptif dan mampu mengoptimalkan sumber daya teknologi dalam kondisi apa pun.
+                Di samping analisis data, saya memiliki ketertarikan mendalam dan pengalaman riil dalam <strong className="text-royal-blue dark:text-sky-blue">Web Development</strong>, <strong className="text-royal-blue dark:text-sky-blue">Desain Grafis</strong>, dan <strong className="text-royal-blue dark:text-sky-blue">Fotografi</strong>. Portofolio kepemimpinan visual saya meliputi peran sebagai Kepala Bidang Jurnalistik & Bursa PAKSI Udayana, di mana saya mengarahkan branding digital media sosial, serta menyusun konsep kreatif feed Instagram pengabdian KKN Desa Lebih.
               </p>
             </div>
 

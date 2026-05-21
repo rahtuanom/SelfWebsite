@@ -5,30 +5,72 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import TypewriterEffect from "./TypewriterEffect";
 import Link from "next/link";
+import { useTheme } from "next-themes";
+import Aurora from "./Aurora";
 
 // 1. Static Import of the Images to bypass GitHub Pages basePath issues
 import profilePic from "@/public/SelfPotrait.png";
 import doodleSvg from "@/public/Doodle.svg";
 
 export default function Hero() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const characters = "MAYBE THERE IS SOMETHING INTERESTING HERE, PLEASE TAKE A LOOK AROUND • ".split("");
   const radius = 190;
 
   // Hover states (separated carefully)
   const [isPhotoHovered, setIsPhotoHovered] = useState(false);
-  const [showCV, setShowCV] = useState(false);
 
   return (
-    <section className="relative w-full h-[calc(100vh-6rem)] flex flex-col items-center justify-start overflow-hidden px-6 pt-0 pb-0">
+    <section className="relative w-full h-screen flex flex-col items-center justify-start overflow-hidden px-6 pt-24 pb-0 -mt-24">
 
-      {/* Light Mode Doodle Pattern */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none dark:hidden opacity-30">
-        <svg viewBox="0 0 400 400" className="w-full h-full max-w-2xl max-h-2xl animate-[spin_60s_linear_infinite]" fill="none" stroke="currentColor" strokeWidth="2">
-          <circle cx="200" cy="200" r="100" strokeDasharray="10 10" />
-          <circle cx="200" cy="200" r="150" strokeDasharray="15 15" />
-          <circle cx="200" cy="200" r="200" strokeDasharray="20 20" />
+      {/* Dark Mode Aurora Background */}
+      {mounted && theme === "dark" && (
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+          <Aurora
+            colorStops={["#0ea5e9", "#7c3aed", "#10b981"]}
+            blend={0.6}
+            amplitude={1.0}
+            speed={0.4}
+          />
+        </div>
+      )}
+
+      {/* Light Mode Background: Pure CSS dot grid + static concentric rings
+          No animation = near-zero CPU/GPU impact vs the old spinning SVG */}
+      <div className="absolute inset-0 z-0 pointer-events-none dark:hidden">
+        {/* Dot grid layer */}
+        <div
+          className="absolute inset-0 opacity-[0.35]"
+          style={{
+            backgroundImage: "radial-gradient(circle, #000 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        {/* Static concentric rings (brutalist geometric feel without animation overhead) */}
+        <svg
+          viewBox="0 0 400 400"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-2xl max-h-2xl opacity-[0.1]"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+        >
+          <circle cx="200" cy="200" r="80" strokeDasharray="8 6" />
+          <circle cx="200" cy="200" r="130" strokeDasharray="12 8" />
+          <circle cx="200" cy="200" r="180" strokeDasharray="16 10" />
         </svg>
+        {/* Radial fade vignette for depth */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "radial-gradient(ellipse at center, transparent 40%, rgba(255,255,255,0.7) 100%)",
+          }}
+        />
       </div>
 
       {/* 1. TOP CENTER: Main Text & Badge */}
@@ -47,8 +89,8 @@ export default function Hero() {
           </svg>
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-black text-foreground">
-          I'm <span className="text-pink-500 dark:text-sky-blue">Rahtu Anom,</span>
+        <h1 className="text-5xl md:text-7xl font-black text-foreground tracking-tight">
+          I'm <span className="text-blue-500 dark:text-sky-blue">Rahtu Anom,</span>
         </h1>
 
         {/* Orange Curve Doodles (Complimentary color) */}
@@ -71,7 +113,7 @@ export default function Hero() {
           <div className="max-w-xs relative pl-6 md:pl-0">
             <div className="text-5xl text-slate-400 dark:text-slate-500 mb-1 font-serif leading-none opacity-50 absolute -top-6 left-0 md:-left-6">“</div>
             <p className="text-sm text-slate-700 dark:text-slate-300 font-medium leading-relaxed relative z-10">
-              Visual Data Storyteller yang antusias dengan AI dan Web Development. Terbiasa survive ngoding pakai laptop kentang dan menangkap momen lewat lensa fotografi.
+              Data Scientist lulusan TI Udayana yang dinamis dengan keahlian Linux otodidak yang lahir dari adaptabilitas perangkat keras (<em>laptop kentang</em>). Berpengalaman nyata dalam Web Dev, Desain Grafis, dan Fotografi.
             </p>
           </div>
         </motion.div>
@@ -157,7 +199,7 @@ export default function Hero() {
                 return (
                   <span
                     key={i}
-                    className="absolute text-sm font-black tracking-widest text-sky-500 dark:text-sky-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] dark:drop-shadow-md"
+                    className="absolute text-[11px] md:text-xs font-mono font-bold uppercase tracking-widest text-sky-500 dark:text-sky-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.5)] dark:drop-shadow-md"
                     style={{
                       transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
                       transformStyle: "preserve-3d",
@@ -181,50 +223,19 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.6 }}
       >
-        <div className="relative">
-          <button
-            onClick={() => setShowCV(!showCV)}
-            className="px-6 py-3 md:px-8 md:py-3 rounded-none dark:rounded-full font-bold transition-all duration-200 bg-cyan-400 dark:bg-sky-400 text-black dark:text-white shadow-[4px_4px_0px_0px_#000] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] dark:shadow-md dark:hover:shadow-lg dark:hover:-translate-y-1 dark:hover:translate-x-0 flex items-center gap-2 border-[3px] border-black dark:border-transparent z-50 relative"
+        <a
+          href="/CV_I Gusti Ngurah Anom Hariyadi.pdf"
+          download
+          className="px-6 py-3 md:px-8 md:py-3 rounded-none dark:rounded-full font-bold transition-all duration-200 bg-cyan-400 dark:bg-sky-400 text-black dark:text-white shadow-[4px_4px_0px_0px_#000] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] dark:shadow-md dark:hover:shadow-lg dark:hover:-translate-y-1 dark:hover:translate-x-0 flex items-center gap-2 border-[3px] border-black dark:border-transparent z-50 relative"
+        >
+          Download CV
+          <svg
+            className="w-4.5 h-4.5"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}
           >
-            Download CV
-            <motion.svg
-              animate={{ rotate: showCV ? 180 : 0 }}
-              className="w-4 h-4"
-              fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
-            </motion.svg>
-          </button>
-
-          {/* Drop-up CV Menu */}
-          <AnimatePresence>
-            {showCV && (
-              <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                className="absolute bottom-[calc(100%+10px)] left-0 bg-white dark:bg-slate-900 border-[3px] border-black dark:border-slate-700 rounded-none dark:rounded-2xl shadow-[6px_6px_0px_0px_#000] dark:shadow-xl overflow-hidden flex flex-col w-52 z-[60]"
-              >
-                <a
-                  href="/SelfWebsite/CV_FIXED_ENG.pdf"
-                  download
-                  className="px-4 py-3 hover:bg-yellow-400 dark:hover:bg-slate-800 text-black dark:text-slate-200 font-bold text-sm border-b-[3px] border-black dark:border-b dark:border-slate-800 transition-colors flex items-center gap-2"
-                >
-                  <img src="https://flagcdn.com/us.svg" width="20" alt="US Flag" className="rounded-sm shadow-sm" />
-                  CV English
-                </a>
-                <a
-                  href="/SelfWebsite/CV_FIXED_IND.pdf"
-                  download
-                  className="px-4 py-3 hover:bg-yellow-400 dark:hover:bg-slate-800 text-black dark:text-slate-200 font-bold text-sm transition-colors flex items-center gap-2"
-                >
-                  <img src="https://flagcdn.com/id.svg" width="20" alt="ID Flag" className="rounded-sm border border-slate-200 dark:border-slate-700 shadow-sm" />
-                  CV Indonesian
-                </a>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+        </a>
 
         <Link href="/projects" className="px-6 py-3 md:px-8 md:py-3 rounded-none dark:rounded-full font-bold transition-all duration-200 text-black dark:text-slate-300 hover:bg-pink-400 border-[3px] border-transparent hover:border-black hover:shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 dark:hover:bg-transparent dark:hover:border-transparent dark:hover:shadow-none dark:hover:-translate-y-0 dark:hover:text-white">
           Portfolio ↗

@@ -12,7 +12,7 @@ export default function BackgroundOrnaments() {
   const wave4 = "M 0 100 Q 250 50 500 100 T 1000 100 Q 1250 50 1500 100 T 2000 100";
 
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-background transition-colors duration-500 hidden dark:flex items-end">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none -z-50 bg-transparent flex items-end opacity-0 dark:opacity-100 transition-opacity duration-500">
 
       {/* Wave Layer 1 */}
       <motion.div

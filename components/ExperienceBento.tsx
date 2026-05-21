@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { organizationsData, committeesData } from "@/data/content";
+import MagicCard from "./MagicCard";
 
 // Kombinasikan semua pengalaman untuk dirender dalam sidebar
 const allExperiences = [...organizationsData, ...committeesData];
@@ -72,39 +73,51 @@ export default function ExperienceBento() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  onClick={() => setActiveItemId(`${org.organization}-${org.id}`)}
-                  className="group relative bg-slate-50 border-2 border-transparent hover:border-royal-blue hover:bg-white p-4 rounded-2xl cursor-pointer transition-all duration-300 dark:bg-slate-900/50 dark:hover:border-sky-blue dark:hover:bg-slate-800/80 shadow-sm hover:shadow-[4px_4px_0_0_#4169e1] dark:hover:shadow-[0_0_15px_rgba(135,206,235,0.2)]"
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`Lihat detail peran ${org.role} di ${org.organization}`}
+                  className="w-full list-none"
                 >
-                  <div className="flex items-center gap-4 pr-8">
-                    {/* Logo Slot 1:1 */}
-                    {org.logo ? (
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden relative border border-slate-200 dark:border-slate-700 bg-white">
-                        <Image src={org.logo} alt={`Logo ${org.organization}`} fill className="object-cover" sizes="48px" />
+                  <MagicCard
+                    glowColor="rgba(65, 105, 225, 0.12)"
+                    borderColor="rgba(65, 105, 225, 0.4)"
+                    neobrutalistShadow="shadow-sm"
+                    neobrutalistHoverShadow="hover:shadow-[4px_4px_0_0_#4169e1]"
+                    neobrutalistBorderColor="border-slate-200 dark:border-white/10"
+                    innerClassName="bg-slate-50 dark:bg-slate-900/50"
+                  >
+                    <div
+                      onClick={() => setActiveItemId(`${org.organization}-${org.id}`)}
+                      className="group relative p-4 flex items-center gap-4 cursor-pointer transition-all duration-300 w-full"
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Lihat detail peran ${org.role} di ${org.organization}`}
+                    >
+                      {/* Logo Slot 1:1 */}
+                      {org.logo ? (
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden relative border border-slate-200 dark:border-slate-700 bg-white">
+                          <Image src={org.logo} alt={`Logo ${org.organization}`} fill className="object-cover" sizes="48px" />
+                        </div>
+                      ) : (
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-400">
+                          <span className="text-xs font-bold">{org.organization.substring(0, 2).toUpperCase()}</span>
+                        </div>
+                      )}
+                      
+                      <div className="flex-grow pr-6">
+                        <h4 className="text-lg font-bold text-slate-900 dark:text-white line-clamp-1 group-hover:text-royal-blue dark:group-hover:text-sky-blue transition-colors">
+                          {org.role}
+                        </h4>
+                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1">
+                          {org.organization} <span className="mx-1">•</span> {org.period}
+                        </p>
                       </div>
-                    ) : (
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-400">
-                        <span className="text-xs font-bold">{org.organization.substring(0, 2).toUpperCase()}</span>
+
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-royal-blue dark:text-sky-blue">
+                          <path d="M5 12h14"></path>
+                          <path d="m12 5 7 7-7 7"></path>
+                        </svg>
                       </div>
-                    )}
-                    
-                    <div>
-                      <h4 className="text-lg font-bold text-slate-900 dark:text-white line-clamp-1 group-hover:text-royal-blue dark:group-hover:text-sky-blue transition-colors">
-                        {org.role}
-                      </h4>
-                      <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1">
-                        {org.organization} <span className="mx-1">•</span> {org.period}
-                      </p>
                     </div>
-                  </div>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-royal-blue dark:text-sky-blue">
-                      <path d="M5 12h14"></path>
-                      <path d="m12 5 7 7-7 7"></path>
-                    </svg>
-                  </div>
+                  </MagicCard>
                 </motion.li>
               ))}
             </ul>
@@ -122,39 +135,51 @@ export default function ExperienceBento() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 + 0.2 }}
-                  onClick={() => setActiveItemId(`${com.organization}-${com.id}`)}
-                  className="group relative bg-royal-blue/5 border-2 border-transparent hover:border-royal-blue/30 p-4 rounded-2xl cursor-pointer transition-all duration-300 dark:bg-sky-900/10 dark:hover:border-sky-500/30 dark:hover:bg-sky-900/20 shadow-sm"
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`Lihat detail peran ${com.role} di ${com.organization}`}
+                  className="w-full list-none"
                 >
-                  <div className="flex items-center gap-4 pr-8">
-                     {/* Logo Slot 1:1 */}
-                     {com.logo ? (
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden relative border border-slate-200 dark:border-slate-700 bg-white">
-                        <Image src={com.logo} alt={`Logo ${com.organization}`} fill className="object-cover" sizes="48px" />
-                      </div>
-                    ) : (
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-400">
-                        <span className="text-xs font-bold">{com.organization.substring(0, 2).toUpperCase()}</span>
-                      </div>
-                    )}
+                  <MagicCard
+                    glowColor="rgba(14, 165, 233, 0.12)"
+                    borderColor="rgba(14, 165, 233, 0.4)"
+                    neobrutalistShadow="shadow-sm"
+                    neobrutalistHoverShadow="hover:shadow-[4px_4px_0_0_#0ea5e9]"
+                    neobrutalistBorderColor="border-slate-200 dark:border-white/10"
+                    innerClassName="bg-slate-50 dark:bg-slate-900/50"
+                  >
+                    <div
+                      onClick={() => setActiveItemId(`${com.organization}-${com.id}`)}
+                      className="group relative p-4 flex items-center gap-4 cursor-pointer transition-all duration-300 w-full"
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`Lihat detail peran ${com.role} di ${com.organization}`}
+                    >
+                      {/* Logo Slot 1:1 */}
+                      {com.logo ? (
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden relative border border-slate-200 dark:border-slate-700 bg-white">
+                          <Image src={com.logo} alt={`Logo ${com.organization}`} fill className="object-cover" sizes="48px" />
+                        </div>
+                      ) : (
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-400">
+                          <span className="text-xs font-bold">{com.organization.substring(0, 2).toUpperCase()}</span>
+                        </div>
+                      )}
 
-                    <div>
-                      <h4 className="text-lg font-bold text-slate-900 dark:text-white line-clamp-1 group-hover:text-royal-blue dark:group-hover:text-sky-blue transition-colors">
-                        {com.role}
-                      </h4>
-                      <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">
-                        {com.organization} <span className="mx-1">•</span> {com.period}
-                      </p>
+                      <div className="flex-grow pr-6">
+                        <h4 className="text-lg font-bold text-slate-900 dark:text-white line-clamp-1 group-hover:text-royal-blue dark:group-hover:text-sky-blue transition-colors">
+                          {com.role}
+                        </h4>
+                        <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mt-1">
+                          {com.organization} <span className="mx-1">•</span> {com.period}
+                        </p>
+                      </div>
+
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity translate-x-2 group-hover:translate-x-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-royal-blue dark:text-sky-blue">
+                          <path d="M5 12h14"></path>
+                          <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                      </div>
                     </div>
-                  </div>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity translate-x-2 group-hover:translate-x-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-royal-blue dark:text-sky-blue">
-                      <path d="M5 12h14"></path>
-                      <path d="m12 5 7 7-7 7"></path>
-                    </svg>
-                  </div>
+                  </MagicCard>
                 </motion.li>
               ))}
             </ul>

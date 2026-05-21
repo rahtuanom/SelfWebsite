@@ -78,15 +78,31 @@ export default function TypewriterEffect() {
     return () => clearTimeout(timeout);
   }, [line1, line2, phase]);
 
+  // Dynamic color selection based on active phase
+  const getLine1Color = () => {
+    if (phase === 0 || phase === 1 || phase === 2) return "text-indigo-600 dark:text-indigo-400"; // Data Science
+    if (phase === 3 || phase === 4 || phase === 5) return "text-royal-blue dark:text-sky-blue"; // Web
+    return "text-pink-600 dark:text-pink-400"; // Graphic
+  };
+
+  const getLine2Color = () => {
+    if (phase === 6 || phase === 7 || phase === 8) return "text-pink-600 dark:text-pink-400"; // Design
+    return "text-slate-800 dark:text-slate-200"; // Developer
+  };
+
   return (
-    <div className="flex flex-col items-start leading-[1.1]">
-      <span className="text-3xl md:text-4xl font-bold text-foreground">
+    <div className="flex flex-col items-start leading-[1.15] font-mono tracking-tight select-none">
+      <span className={`text-4xl md:text-5xl font-black ${getLine1Color()} transition-colors duration-300`}>
         {line1}
-        {phase !== 0 && phase !== 1 && phase !== 2 && phase !== 3 && phase !== 4 && <span className="animate-pulse text-royal-blue dark:text-sky-blue ml-1">|</span>}
+        {phase !== 0 && phase !== 1 && phase !== 2 && phase !== 3 && phase !== 4 && (
+          <span className="animate-pulse text-royal-blue dark:text-sky-blue ml-0.5">_</span>
+        )}
       </span>
-      <span className="text-3xl md:text-4xl font-bold text-foreground">
+      <span className={`text-4xl md:text-5xl font-black ${getLine2Color()} transition-colors duration-300`}>
         {line2}
-        {(phase === 0 || phase === 1 || phase === 2 || phase === 3 || phase === 4) && <span className="animate-pulse text-royal-blue dark:text-sky-blue ml-1">|</span>}
+        {(phase === 0 || phase === 1 || phase === 2 || phase === 3 || phase === 4) && (
+          <span className="animate-pulse text-royal-blue dark:text-sky-blue ml-0.5">_</span>
+        )}
       </span>
     </div>
   );

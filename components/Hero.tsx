@@ -1,12 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import TypewriterEffect from "./TypewriterEffect";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import Aurora from "./Aurora";
+import dynamic from "next/dynamic";
+
+// Lazy load komponen berat (WebGL/OGL) agar tidak memblokir render utama
+const Aurora = dynamic(() => import("./Aurora"), { ssr: false });
 
 // 1. Static Import of the Images to bypass GitHub Pages basePath issues
 import profilePic from "@/public/SelfPotrait.png";
@@ -15,6 +18,10 @@ import doodleSvg from "@/public/Doodle.svg";
 export default function Hero() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  
+  // Ref untuk mendeteksi apakah Hero Section sedang terlihat di layar
+  const heroRef = useRef<HTMLElement>(null);
+  const isInView = useInView(heroRef, { margin: "0px 0px 200px 0px" }); // Beri margin 200px agar tidak kaget saat scroll
 
   React.useEffect(() => {
     setMounted(true);
@@ -27,11 +34,11 @@ export default function Hero() {
   const [isPhotoHovered, setIsPhotoHovered] = useState(false);
 
   return (
-    <section className="relative w-full h-screen flex flex-col items-center justify-start overflow-hidden px-6 pt-24 pb-0 -mt-24">
+    <section ref={heroRef} className="relative w-full h-screen flex flex-col items-center justify-start overflow-hidden px-6 pt-24 pb-0 -mt-24">
 
-      {/* Dark Mode Aurora Background */}
-      {mounted && theme === "dark" && (
-        <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+      {/* Dark Mode Aurora Background - Hanya render saat Hero terlihat (isInView) */}
+      {mounted && theme === "dark" && isInView && (
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-40 will-change-transform">
           <Aurora
             colorStops={["#0ea5e9", "#7c3aed", "#10b981"]}
             blend={0.6}
@@ -186,13 +193,14 @@ export default function Hero() {
             style={{
               transformStyle: "preserve-3d",
               transform: "rotateX(-10deg) rotateZ(5deg) translateY(-30px)",
+              willChange: "transform"
             }}
           >
             <motion.div
               className="relative flex items-center justify-center"
-              style={{ transformStyle: "preserve-3d" }}
-              animate={{ rotateY: -360 }}
-              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+              style={{ transformStyle: "preserve-3d", willChange: "transform" }}
+              animate={isInView ? { rotateY: -360 } : { rotateY: 0 }}
+              transition={isInView ? { duration: 15, repeat: Infinity, ease: "linear" } : { duration: 0 }}
             >
               {characters.map((char, i) => {
                 const angle = (i * 360) / characters.length;

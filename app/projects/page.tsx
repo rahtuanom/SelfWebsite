@@ -17,6 +17,12 @@ export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [fullscreenProjectImage, setFullscreenProjectImage] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState(3);
+
+  // Reset pagination saat filter berganti
+  React.useEffect(() => {
+    setVisibleCount(3);
+  }, [activeFilter]);
 
   // Fungsi untuk memetakan kategori project (string) ke Tab Filter
   const getFilterCategory = (category: string) => {
@@ -119,6 +125,8 @@ export default function Projects() {
     ? projectsData 
     : projectsData.filter(p => getFilterCategory(p.category) === activeFilter);
 
+  const displayedProjects = filteredProjects.slice(0, visibleCount);
+
   const modalTheme = selectedProject ? getThemeStyles(selectedProject.themeColor) : null;
 
   return (
@@ -164,10 +172,10 @@ export default function Projects() {
             ))}
           </div>
 
-          {/* GRID PORTFOLIO (Horizontal Swipe on Mobile, 3 Columns SEO Friendly on Desktop) */}
-          <motion.div layout className="flex md:grid overflow-x-auto snap-x snap-mandatory md:overflow-x-visible md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 pb-6 w-full px-1 md:px-0 scrollbar-hide md:scrollbar-default">
+          {/* GRID PORTFOLIO (3 Columns SEO Friendly) */}
+          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project, i) => (
+              {displayedProjects.map((project, i) => (
                 <motion.div
                   key={project.id}
                   layout
@@ -175,7 +183,7 @@ export default function Projects() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: -15 }}
                   transition={{ duration: 0.25, delay: i * 0.04 }}
-                  className="min-w-[85vw] snap-center shrink-0 md:min-w-0 md:shrink md:h-full"
+                  className="h-full"
                 >
                   <PremiumProjectCard
                     project={project}
@@ -192,6 +200,21 @@ export default function Projects() {
           {filteredProjects.length === 0 && (
             <div className="text-center py-20">
               <p className="text-slate-500 dark:text-slate-400 text-lg">Belum ada project di kategori ini.</p>
+            </div>
+          )}
+
+          {/* Load More Button */}
+          {visibleCount < filteredProjects.length && (
+            <div className="flex justify-center mt-10">
+              <button
+                onClick={() => setVisibleCount(prev => prev + 3)}
+                className="px-6 py-3 rounded-xl font-bold transition-all duration-300 border-2 border-black dark:border-white/20 bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-[4px_4px_0_0_#0f172a] hover:shadow-[6px_6px_0_0_#0f172a] hover:-translate-y-1 active:translate-y-0 active:shadow-[0_0_0_0_#0f172a] flex items-center gap-2"
+              >
+                Muat Lebih Banyak
+                <svg className="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+              </button>
             </div>
           )}
         </div>

@@ -16,7 +16,7 @@ export default function BackgroundOrnaments() {
 
       {/* Wave Layer 1 */}
       <motion.div
-        className="absolute bottom-0 left-0 w-[200vw] h-[50vh] opacity-40 dark:opacity-30 filter blur-[4px]"
+        className="absolute bottom-0 left-0 w-[200vw] h-[50vh] opacity-40 dark:opacity-30 filter blur-[4px] will-change-transform transform-gpu"
         animate={{ x: ["0%", "-50%"] }}
         transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
       >
@@ -28,7 +28,7 @@ export default function BackgroundOrnaments() {
 
       {/* Wave Layer 2 - Opposite direction */}
       <motion.div
-        className="absolute bottom-[5%] left-0 w-[200vw] h-[60vh] opacity-50 dark:opacity-40 filter blur-[6px]"
+        className="absolute bottom-[5%] left-0 w-[200vw] h-[60vh] opacity-50 dark:opacity-40 filter blur-[6px] will-change-transform transform-gpu"
         animate={{ x: ["-50%", "0%"] }}
         transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
       >
@@ -40,7 +40,7 @@ export default function BackgroundOrnaments() {
 
       {/* Wave Layer 3 - Faster */}
       <motion.div
-        className="absolute bottom-[10%] left-0 w-[200vw] h-[40vh] opacity-60 dark:opacity-50 filter blur-[3px]"
+        className="absolute bottom-[10%] left-0 w-[200vw] h-[40vh] opacity-60 dark:opacity-50 filter blur-[3px] will-change-transform transform-gpu"
         animate={{ x: ["0%", "-50%"] }}
         transition={{ repeat: Infinity, duration: 15, ease: "linear" }}
       >
@@ -51,7 +51,7 @@ export default function BackgroundOrnaments() {
 
       {/* Wave Layer 4 - Taller */}
       <motion.div
-        className="absolute bottom-[-10%] left-0 w-[200vw] h-[80vh] opacity-30 dark:opacity-20 filter blur-[8px]"
+        className="absolute bottom-[-10%] left-0 w-[200vw] h-[80vh] opacity-30 dark:opacity-20 filter blur-[8px] will-change-transform transform-gpu"
         animate={{ x: ["-50%", "0%"] }}
         transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
       >

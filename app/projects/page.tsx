@@ -164,8 +164,8 @@ export default function Projects() {
             ))}
           </div>
 
-          {/* GRID PORTFOLIO (3 Columns SEO Friendly) */}
-          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* GRID PORTFOLIO (Horizontal Swipe on Mobile, 3 Columns SEO Friendly on Desktop) */}
+          <motion.div layout className="flex md:grid overflow-x-auto snap-x snap-mandatory md:overflow-x-visible md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 pb-6 w-full px-1 md:px-0 scrollbar-hide md:scrollbar-default">
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project, i) => (
                 <motion.div
@@ -175,7 +175,7 @@ export default function Projects() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: -15 }}
                   transition={{ duration: 0.25, delay: i * 0.04 }}
-                  className="h-full"
+                  className="min-w-[85vw] snap-center shrink-0 md:min-w-0 md:shrink md:h-full"
                 >
                   <PremiumProjectCard
                     project={project}
@@ -216,7 +216,7 @@ export default function Projects() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 250 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-6xl max-h-[85vh] bg-white dark:bg-slate-950 border-[3px] border-slate-900 dark:border-white/10 shadow-[8px_8px_0px_0px_#0f172a] dark:shadow-2xl rounded-3xl overflow-hidden z-[101] flex flex-col md:flex-row"
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-6xl max-h-[85vh] bg-white dark:bg-slate-950 border-[3px] border-slate-900 dark:border-white/10 shadow-[8px_8px_0px_0px_#0f172a] dark:shadow-2xl rounded-3xl overflow-y-auto md:overflow-hidden z-[101] flex flex-col md:flex-row"
             >
               {/* Close Button absolute top corner */}
               <button
@@ -230,7 +230,7 @@ export default function Projects() {
               </button>
 
               {/* SISI KIRI: Galeri Gambar / Carousel (Dibuat adaptif untuk foto non-1:1 / landscape, lebih lebar 60%) */}
-              <div className="w-full md:w-[60%] bg-slate-50 dark:bg-slate-900 border-b-[3px] md:border-b-0 md:border-r-[3px] border-slate-900 dark:border-white/10 p-6 flex flex-col items-center justify-center relative overflow-hidden aspect-[16/10] sm:aspect-[16/9] md:aspect-auto md:h-auto md:min-h-[500px] flex-shrink-0">
+              <div className="w-full md:w-[60%] bg-slate-50 dark:bg-slate-900 border-b-[3px] md:border-b-0 md:border-r-[3px] border-slate-900 dark:border-white/10 p-6 flex flex-col items-center justify-center relative overflow-hidden h-[40vh] min-h-[300px] md:h-auto md:min-h-[500px] flex-shrink-0 md:sticky md:top-0">
                 {selectedProject.gallery && selectedProject.gallery.length > 0 ? (
                   <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-slate-900 dark:border-slate-800 bg-white dark:bg-black group shadow-md flex items-center justify-center">
                     
@@ -379,7 +379,7 @@ export default function Projects() {
               </div>
 
               {/* SISI KANAN: Detail Informasi (Lebih ramping 40% untuk mengimbangi gambar landscape yang lebar) */}
-              <div className="w-full md:w-[40%] p-6 md:p-8 flex flex-col justify-start overflow-y-auto bg-white dark:bg-slate-950 pr-4 md:pr-8">
+              <div className="w-full md:w-[40%] p-6 md:p-8 flex flex-col justify-start md:overflow-y-auto bg-white dark:bg-slate-950 pr-4 md:pr-8">
                 <span className={`inline-block text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full w-fit mb-3 mt-2 md:mt-0 ${modalTheme?.modalBadge}`}>
                   {selectedProject.category}
                 </span>

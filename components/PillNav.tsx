@@ -30,7 +30,7 @@ const PillNav: React.FC<PillNavProps> = ({
   activeHref,
   className = "",
   ease = "power3.easeOut",
-  baseColor = "#fff",
+  baseColor = "#ffffffff",
   pillColor = "#120F17",
   hoveredPillTextColor = "#120F17",
   pillTextColor,
@@ -109,7 +109,7 @@ const PillNav: React.FC<PillNavProps> = ({
     window.addEventListener("resize", onResize);
 
     if (document.fonts) {
-      document.fonts.ready.then(layout).catch(() => {});
+      document.fonts.ready.then(layout).catch(() => { });
     }
 
     // Set initial layout transitions

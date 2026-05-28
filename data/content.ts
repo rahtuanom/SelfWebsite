@@ -297,45 +297,60 @@ export const organizationsData: Experience[] = [
   }
 ];
 
+import thumb7 from "@/app/gallery/pictures/thumbnails/pic7.jpg";
+import thumb8 from "@/app/gallery/pictures/thumbnails/pic8.jpg";
+import thumb9 from "@/app/gallery/pictures/thumbnails/pic9.jpg";
+import thumb10 from "@/app/gallery/pictures/thumbnails/pic10.jpg";
+
 export const committeesData: Experience[] = [
   {
     id: 1,
-    role: "Koordinator Seksi Acara",
+    role: "Koordinator - Sie Acara",
     organization: "Pelatihan Jurnalistik Mahasiswa (PJM) Fakultas Teknik",
+    logo: "/logos/LOGOMAESTRO.jpg",
     period: "2023",
     description: "Memimpin divisi acara, merancang konsep (rundown), dan memastikan kualitas eksekusi lapangan berjalan tanpa hambatan.",
+    responsibilities: [
+      "Memimpin seluruh proses perencanaan (konsep dan proposal) serta eksekusi lapangan (rundown) untuk kegiatan pelatihan jurnalistik.",
+      "Menjalin komunikasi efektif dengan internal dan eksternal",
+      "Melakukan evaluasi setelah acara guna mengidentifikasi kekuatan dan area perbaikan untuk kegiatan mendatang.",
+      "Mengembangkan kreativitas dalam penyajian materi agar sesi tidak monoton dan mampu mempertahankan tingkat keterlibatan peserta."
+    ]
   },
   {
     id: 2,
-    role: "Master of Ceremony (MC) Formal",
+    role: "Master of Ceremony (MC) - Sie Acara",
     organization: "Pembukaan PILMAPRES Universitas Udayana",
+    logo: "/logos/LOGOHMTI.jpg",
     period: "2022",
     description: "Memandu berjalannya ajang bergengsi Pemilihan Mahasiswa Berprestasi (Pilmapres) tingkat universitas dengan standar protokoler tinggi.",
   },
   {
     id: 3,
-    role: "Master of Ceremony (MC)",
-    organization: "IT-ESEGA",
+    role: "Master of Ceremony (MC) - Sie Acara",
+    organization: "Pelatihan Jurnalistik Mahasiswa (PJM)",
+    logo: "/logos/LOGOMAESTRO.jpg",
+    gallery: [thumb7.src, thumb8.src, thumb9.src, thumb10.src],
     period: "2022",
-    description: "Menjadi wajah utama acara IT-ESEGA (Information Technology Electronic Sport Based On Excellent Games), membangun antusiasme peserta.",
+    description: "Memandu seluruh rangkaian sesi pelatihan secara profesional.",
+    responsibilities: [
+      "Mengerjakan rundown acara dengan terperinci",
+      "Membuat teks MC dan Kerangka Teks Moderator",
+      "Menjalankan tugas utama menjadi MC yang mengatur jalannya acara utama",
+    ]
   },
   {
     id: 4,
-    role: "Master of Ceremony (MC)",
-    organization: "Pelatihan Jurnalistik Mahasiswa (PJM)",
-    period: "2022",
-    description: "Memandu seluruh rangkaian sesi pelatihan secara profesional.",
-  },
-  {
-    id: 5,
-    role: "Fasilitator & Pengawas Ruang (Sie KGP)",
+    role: "Anggota Sie KGP",
     organization: "Kids Game Programming (ITCC)",
+    logo: "/logos/LOGOSCRATCH.png",
     period: "2022",
-    description: "Menjadi fasilitator sekaligus pengawas teknis untuk kategori lomba pemrograman game anak-anak tingkat nasional yang diselenggarakan oleh Information Technology Creative Competition.",
+    description: "Bertanggung jawab menjadi fasilitator sekaligus pengawas teknis untuk kategori lomba pemrograman game anak-anak tingkat nasional yang diselenggarakan oleh Information Technology Creative Competition.",
     responsibilities: [
+      "Membuat demo project untuk contoh game yang dapat diikutsertakan sesuai dengan tema",
       "Memberikan pendampingan teknis dan arahan kepada peserta (anak-anak) sebelum proses penjurian dimulai.",
       "Memastikan seluruh perangkat lunak (software) dan komputer peserta berfungsi optimal tanpa kendala.",
-      "Menciptakan lingkungan kompetisi yang kondusif, menyenangkan, dan ramah anak (child-friendly)."
+      "Menciptakan lingkungan kompetisi yang kondusif, menyenangkan, dan ramah anak."
     ]
   }
 ];

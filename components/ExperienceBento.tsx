@@ -188,7 +188,7 @@ export default function ExperienceBento() {
         </div>
       </div>
 
-      {/* SIDEBAR / DRAWER OVERLAY */}
+      {/* MODAL OVERLAY */}
       <AnimatePresence>
         {activeItemId && activeItem && (
           <>
@@ -198,134 +198,180 @@ export default function ExperienceBento() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setActiveItemId(null)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+              className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100]"
               aria-hidden="true"
             />
             
-            {/* Sidebar Content */}
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: "0%" }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 bottom-0 w-full md:w-[500px] bg-white dark:bg-slate-950 z-[101] shadow-2xl overflow-y-auto border-l-4 border-black dark:border-slate-800"
-              role="dialog"
-              aria-modal="true"
-            >
-              {/* Header Sidebar (Sticky with Close Button) */}
-              <div className="p-6 border-b border-slate-200 dark:border-slate-800 sticky top-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md z-20 flex justify-between items-start">
-                <div className="pr-4">
-                  <h2 className="text-2xl font-black text-slate-900 dark:text-white leading-tight">
-                    {activeItem.role}
-                  </h2>
-                  <p className="text-royal-blue dark:text-sky-blue font-bold mt-2">
-                    {activeItem.organization}
-                  </p>
-                  <p className="text-sm font-medium text-slate-500 mt-1">{activeItem.period}</p>
-                </div>
-                
-                <button 
-                  onClick={() => setActiveItemId(null)}
-                  className="p-2 bg-slate-100 hover:bg-red-100 hover:text-red-600 dark:bg-slate-800 dark:hover:bg-red-900/30 rounded-full transition-colors flex-shrink-0"
-                  aria-label="Tutup sidebar"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                  </svg>
-                </button>
-              </div>
-
-              {/* Instagram-style Carousel Area */}
-              {activeItem.gallery && activeItem.gallery.length > 0 && (
-                <div className="relative w-full aspect-square bg-slate-100 dark:bg-slate-900 overflow-hidden group touch-pan-y">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={currentImageIndex}
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -50 }}
-                      transition={{ duration: 0.3 }}
-                      className="absolute inset-0 cursor-grab active:cursor-grabbing"
-                      drag="x"
-                      dragConstraints={{ left: 0, right: 0 }}
-                      dragElastic={0.2}
-                      onDragEnd={(e, { offset, velocity }) => {
-                        const swipe = offset.x;
-                        if (swipe < -50) nextImage();
-                        else if (swipe > 50) prevImage();
-                      }}
+            {/* Modal Container */}
+            <div className="fixed inset-0 z-[101] flex items-center justify-center p-2 sm:p-4 md:p-6 pointer-events-none">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                transition={{ type: "spring", damping: 25, stiffness: 250 }}
+                className="w-[98vw] md:w-[95vw] max-w-7xl h-[95vh] bg-white dark:bg-slate-950 border-[3px] border-slate-900 dark:border-white/10 shadow-[8px_8px_0px_0px_#0f172a] dark:shadow-2xl overflow-hidden rounded-2xl md:rounded-3xl pointer-events-auto flex flex-col md:flex-row relative"
+                role="dialog"
+                aria-modal="true"
+              >
+                {/* Left Side: Instagram-style Carousel Area (with Projects styling) */}
+                {activeItem.gallery && activeItem.gallery.length > 0 && (
+                  <div className="w-full h-[40vh] md:h-full md:w-[65%] lg:w-[70%] flex-shrink-0 border-b-[3px] md:border-b-0 md:border-r-[3px] border-slate-900 dark:border-white/10 bg-slate-50 dark:bg-slate-900 p-4 md:p-6 flex flex-col items-center justify-center relative overflow-hidden">
+                    
+                    {/* Close Button for Mobile (Floating over image if gallery exists on mobile) */}
+                    <button 
+                      onClick={() => setActiveItemId(null)}
+                      className="absolute top-4 right-4 z-[105] p-2.5 md:hidden bg-slate-100/90 text-slate-900 hover:bg-red-100 hover:text-red-600 rounded-full border-2 border-slate-900 backdrop-blur-md shadow-[2px_2px_0px_0px_#0f172a] transition-all active:scale-95"
+                      aria-label="Tutup modal"
                     >
-                      <Image 
-                        src={activeItem.gallery[currentImageIndex]}
-                        alt={`Dokumentasi ${activeItem.organization} ${currentImageIndex + 1}`}
-                        fill
-                        className="object-cover pointer-events-none"
-                        sizes="(max-width: 768px) 100vw, 500px"
-                      />
-                    </motion.div>
-                  </AnimatePresence>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
 
-                  {/* Navigation Arrows (Hanya jika > 1 gambar) */}
-                  {activeItem.gallery.length > 1 && (
-                    <>
-                      <button 
-                        onClick={prevImage}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/50 dark:bg-black/50 backdrop-blur-md flex items-center justify-center text-slate-900 dark:text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity hover:bg-white dark:hover:bg-black z-10 shadow-md"
-                        aria-label="Gambar sebelumnya"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-                      </button>
-                      <button 
-                        onClick={nextImage}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/50 dark:bg-black/50 backdrop-blur-md flex items-center justify-center text-slate-900 dark:text-white opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity hover:bg-white dark:hover:bg-black z-10 shadow-md"
-                        aria-label="Gambar selanjutnya"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-                      </button>
-                      
-                      {/* Instagram-style Dots Indicator */}
-                      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-1.5 z-10">
-                        {activeItem.gallery.map((_, idx) => (
-                          <div 
-                            key={idx} 
-                            className={`h-1.5 rounded-full transition-all duration-300 ${
-                              idx === currentImageIndex ? "w-4 bg-white" : "w-1.5 bg-white/50"
-                            }`}
+                    <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-slate-900 dark:border-slate-800 bg-white dark:bg-black group shadow-md flex items-center justify-center touch-pan-y">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={currentImageIndex}
+                          initial={{ opacity: 0, scale: 1.02 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="absolute inset-0 flex items-center justify-center cursor-grab active:cursor-grabbing"
+                          drag="x"
+                          dragConstraints={{ left: 0, right: 0 }}
+                          dragElastic={0.2}
+                          onDragEnd={(e, { offset, velocity }) => {
+                            const swipe = offset.x;
+                            if (swipe < -50) nextImage();
+                            else if (swipe > 50) prevImage();
+                          }}
+                        >
+                          {/* Efek blurred background yang mewah */}
+                          <div className="absolute inset-0 filter blur-xl scale-110 opacity-30 select-none pointer-events-none">
+                            <Image 
+                              src={activeItem.gallery[currentImageIndex]}
+                              alt="Blurred background"
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+
+                          <Image 
+                            src={activeItem.gallery[currentImageIndex]}
+                            alt={`Dokumentasi ${activeItem.organization} ${currentImageIndex + 1}`}
+                            fill
+                            className="object-contain relative z-10 pointer-events-none"
+                            sizes="(max-width: 768px) 100vw, 1000px"
+                            priority
                           />
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
-              )}
+                        </motion.div>
+                      </AnimatePresence>
 
-              {/* Body Sidebar */}
-              <div className="p-8">
-                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Deskripsi</h3>
-                <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg mb-8">
-                  {activeItem.description}
-                </p>
-
-                {activeItem.responsibilities && activeItem.responsibilities.length > 0 && (
-                  <>
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Tanggung Jawab Utama</h3>
-                    <ul className="space-y-4">
-                      {activeItem.responsibilities.map((resp, idx) => (
-                        <li key={idx} className="flex gap-4 items-start">
-                          <span className="flex-shrink-0 w-7 h-7 rounded-full bg-royal-blue/10 dark:bg-sky-900/50 flex items-center justify-center text-royal-blue dark:text-sky-blue font-bold text-sm mt-0.5 border border-royal-blue/20 dark:border-sky-blue/20">
-                            {idx + 1}
-                          </span>
-                          <span className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                            {resp}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
+                      {/* Navigation Arrows */}
+                      {activeItem.gallery.length > 1 && (
+                        <>
+                          <button 
+                            onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white dark:bg-black/80 dark:hover:bg-black border-2 border-slate-900 dark:border-slate-700 flex items-center justify-center text-slate-900 dark:text-white shadow-[2px_2px_0px_0px_#0f172a] dark:shadow-md cursor-pointer transition-all hover:scale-105 active:scale-95 z-20"
+                            aria-label="Gambar sebelumnya"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 19l-7-7 7-7"/></svg>
+                          </button>
+                          <button 
+                            onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/90 hover:bg-white dark:bg-black/80 dark:hover:bg-black border-2 border-slate-900 dark:border-slate-700 flex items-center justify-center text-slate-900 dark:text-white shadow-[2px_2px_0px_0px_#0f172a] dark:shadow-md cursor-pointer transition-all hover:scale-105 active:scale-95 z-20"
+                            aria-label="Gambar selanjutnya"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 5l7 7-7 7"/></svg>
+                          </button>
+                          
+                          {/* Instagram-style Dots Indicator */}
+                          <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-1.5 z-20">
+                            {activeItem.gallery.map((_, idx) => (
+                              <button 
+                                key={idx} 
+                                onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(idx); }}
+                                className={`h-2.5 rounded-full border border-slate-950 dark:border-white transition-all duration-300 cursor-pointer ${
+                                  idx === currentImageIndex ? "w-6 bg-slate-900 dark:bg-white" : "w-2.5 bg-white/80 hover:bg-white"
+                                }`}
+                                aria-label={`Go to slide ${idx + 1}`}
+                              />
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
                 )}
-              </div>
-            </motion.div>
+
+                {/* Right Side: Header + Descriptions and Responsibilities */}
+                <div className={`h-full flex flex-col ${!activeItem.gallery?.length ? 'w-full' : 'w-full md:w-[35%] lg:w-[30%]'} bg-white dark:bg-slate-950 relative`}>
+                  
+                  {/* Header Sticky Content (Logo, Title, Close Button) */}
+                  <div className="p-5 border-b-[3px] border-slate-900/10 dark:border-white/5 sticky top-0 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md z-20 flex justify-between items-start flex-shrink-0">
+                    <div className="flex gap-4 items-center">
+                      {/* Logo Profile Picture Style */}
+                      {activeItem.logo ? (
+                        <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden relative border-[2.5px] border-slate-900 dark:border-slate-800 bg-white shadow-sm">
+                          <Image src={activeItem.logo} alt={`Logo ${activeItem.organization}`} fill className="object-cover" sizes="56px" />
+                        </div>
+                      ) : (
+                        <div className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center border-[2.5px] border-slate-900 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 shadow-sm">
+                          <span className="text-sm font-black">{activeItem.organization.substring(0, 2).toUpperCase()}</span>
+                        </div>
+                      )}
+                      
+                      <div className="flex-1 pr-2">
+                        <h2 className="text-lg md:text-xl font-black text-slate-900 dark:text-white leading-tight">
+                          {activeItem.role}
+                        </h2>
+                        <p className="text-sm md:text-base text-royal-blue dark:text-sky-blue font-bold mt-0.5">
+                          {activeItem.organization}
+                        </p>
+                        <p className="text-xs md:text-sm font-bold text-slate-500 mt-0.5">{activeItem.period}</p>
+                      </div>
+                    </div>
+                    
+                    {/* Desktop Close Button (Neo-Brutalist) */}
+                    <button 
+                      onClick={() => setActiveItemId(null)}
+                      className={`p-2 bg-slate-100 hover:bg-red-100 hover:text-red-600 dark:bg-slate-800 dark:hover:bg-red-950/40 dark:hover:text-red-400 rounded-full border-[2px] border-slate-900 dark:border-slate-700 transition-all cursor-pointer shadow-[2px_2px_0px_0px_#0f172a] hover:scale-105 active:scale-95 flex-shrink-0 ${activeItem.gallery?.length ? 'hidden md:flex' : 'flex'}`}
+                      aria-label="Tutup modal"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Scrollable Body Content */}
+                  <div className="p-6 md:p-8 overflow-y-auto flex-1">
+                    <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-base md:text-[1.05rem] mb-8 font-medium">
+                      {activeItem.description}
+                    </p>
+
+                    {activeItem.responsibilities && activeItem.responsibilities.length > 0 && (
+                      <>
+                        <h3 className="text-lg font-black text-slate-900 dark:text-white mb-5 flex items-center gap-2 border-b-2 border-slate-100 dark:border-slate-800 pb-2">
+                          <span className="text-royal-blue dark:text-sky-blue">🎯</span> Tanggung Jawab Utama
+                        </h3>
+                        <ul className="space-y-4">
+                          {activeItem.responsibilities.map((resp, idx) => (
+                            <li key={idx} className="flex gap-4 items-start bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl border-2 border-slate-200 dark:border-slate-800 shadow-sm transition-transform hover:-translate-y-0.5">
+                              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-royal-blue text-white dark:bg-sky-blue dark:text-slate-900 flex items-center justify-center font-black text-xs mt-0.5 shadow-md">
+                                {idx + 1}
+                              </span>
+                              <span className="text-slate-700 dark:text-slate-300 leading-relaxed text-[0.95rem] md:text-base font-medium">
+                                {resp}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </>
         )}
       </AnimatePresence>

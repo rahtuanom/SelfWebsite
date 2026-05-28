@@ -1,103 +1,81 @@
-"use client";
+import fs from "fs";
+import path from "path";
+import { imageSizeFromFile } from "image-size/fromFile";
+import GalleryGrid from "./GalleryGrid";
 
-import { useState } from "react";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import PageTransition from "@/components/PageTransition";
-import { galleryImages, GalleryImage } from "./images";
 
-export default function Gallery() {
-  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
 
-  return (
-    <PageTransition>
-      <main className="relative flex flex-col items-center justify-start min-h-screen py-20 px-6 bg-transparent text-foreground overflow-hidden">
+interface ImageItem {
+  src: string;
+  width: number;
+  height: number;
+  aspectRatio: number;
+  name: string;
+}
+
+async function getGalleryImages(): Promise<ImageItem[]> {
+  const galleryDir = path.join(process.cwd(), "public", "gallery");
+  
+  // Ensure the directory exists
+  if (!fs.existsSync(galleryDir)) {
+    try {
+      await fs.promises.mkdir(galleryDir, { recursive: true });
+    } catch (err) {
+      console.error("Failed to create gallery directory:", err);
+      return [];
+    }
+    return [];
+  }
+  
+  try {
+    const files = await fs.promises.readdir(galleryDir);
+    const imageExtensions = [".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".bmp"];
+    
+    const imageFiles = files.filter((file) => {
+      const ext = path.extname(file).toLowerCase();
+      return imageExtensions.includes(ext);
+    });
+    
+    const images: ImageItem[] = [];
+    
+    for (const file of imageFiles) {
+      const filePath = path.join(galleryDir, file);
+      try {
+        // Read file dimensions asynchronously using the modern image-size 2.x fromFile API
+        const dimensions = await imageSizeFromFile(filePath);
+        const width = dimensions.width || 800;
+        const height = dimensions.height || 600;
         
-        {/* Doodle Pattern for Light Mode (Diagonal Lines) */}
-        <div className="absolute inset-0 z-0 flex pointer-events-none dark:hidden opacity-20 justify-center items-center">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern id="diagonal" width="20" height="20" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-                <line x1="0" y1="0" x2="0" y2="20" stroke="currentColor" strokeWidth="2" className="text-slate-400" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#diagonal)" />
-          </svg>
-        </div>
+        images.push({
+          src: `/gallery/${file}`,
+          width,
+          height,
+          aspectRatio: width / height,
+          name: file,
+        });
+      } catch (err) {
+        console.error(`Error reading metadata for ${file} with imageSizeFromFile:`, err);
+        // Fallback dimensions in case file is corrupt or image-size fails to parse
+        images.push({
+          src: `/gallery/${file}`,
+          width: 800,
+          height: 600,
+          aspectRatio: 800 / 600,
+          name: file,
+        });
+      }
+    }
+    
+    // Sort images alphabetically by file name (so names like pic1, pic2, etc. order cleanly)
+    return images.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+  } catch (err) {
+    console.error("Error reading gallery files:", err);
+    return [];
+  }
+}
 
-        <div className="w-full max-w-6xl z-10 relative">
-          <h1 className="text-4xl md:text-5xl font-bold text-royal-blue dark:text-sky-blue mb-4 text-center">
-            Visual Gallery
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400 text-center mb-16 max-w-2xl mx-auto">
-            A collection of moments, achievements, and behind-the-scenes glimpses into my life and career.
-          </p>
-
-          {/* Masonry Grid */}
-          <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 space-y-6">
-            {galleryImages.map((image, index) => (
-              <motion.div 
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
-                className="break-inside-avoid relative rounded-2xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl dark:shadow-black/50 border border-slate-200 dark:border-white/10"
-                onClick={() => setSelectedImage(image)}
-              >
-                <Image 
-                  src={image.thumb} 
-                  alt={`Gallery Photo ${index + 1}`} 
-                  placeholder="blur"
-                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105" 
-                />
-                
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-royal-blue/0 group-hover:bg-royal-blue/20 dark:group-hover:bg-sky-blue/20 transition-colors duration-300 pointer-events-none" />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </main>
-
-      {/* Lightbox Modal */}
-      <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8"
-            onClick={() => setSelectedImage(null)}
-          >
-            <button
-              className="absolute top-6 right-6 z-50 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-md transition-colors"
-              onClick={() => setSelectedImage(null)}
-              aria-label="Close"
-            >
-              <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative max-w-7xl max-h-full rounded-lg overflow-hidden flex items-center justify-center"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <Image
-                src={selectedImage.full}
-                alt="Selected Full-size Photo"
-                placeholder="blur"
-                className="w-auto h-auto max-w-full max-h-[90vh] object-contain rounded-md"
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </PageTransition>
-  );
+export default async function GalleryPage() {
+  const images = await getGalleryImages();
+  
+  return <GalleryGrid initialImages={images} />;
 }

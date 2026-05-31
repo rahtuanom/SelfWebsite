@@ -30,10 +30,6 @@ export default function Projects() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Reset pagination saat filter berganti
-  React.useEffect(() => {
-    setVisibleCount(6);
-  }, [activeFilter]);
 
   // Fungsi untuk memetakan kategori project (string) ke Tab Filter
   const getFilterCategory = (category: string) => {
@@ -182,7 +178,10 @@ export default function Projects() {
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setActiveFilter(cat)}
+                onClick={() => {
+                  setActiveFilter(cat);
+                  setVisibleCount(6);
+                }}
                 className={`px-4 py-2 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 border-2 ${
                   activeFilter === cat
                     ? "bg-royal-blue text-white border-black dark:bg-sky-blue dark:text-slate-900 dark:border-sky-300 shadow-[3px_3px_0_0_#000] dark:shadow-[0_0_15px_rgba(135,206,235,0.4)] translate-y-[-2px]"

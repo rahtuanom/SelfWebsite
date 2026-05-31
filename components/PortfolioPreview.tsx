@@ -14,7 +14,7 @@ export default function PortfolioPreview() {
   // Ambil project yang ditandai featured dan diurutkan berdasarkan featuredOrder, batasi maksimal 3 project saja untuk estetika grid
   const topProjects = projectsData
     .filter((p) => p.featured)
-    .sort((a, b) => (a.featuredOrder || 99) - (b.featuredOrder || 99))
+    .sort((a, b) => (a.order ?? 99) - (b.order ?? 99))
     .slice(0, 3);
 
   const handleOpenDetails = () => {

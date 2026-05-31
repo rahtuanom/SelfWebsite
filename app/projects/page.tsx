@@ -16,12 +16,23 @@ export default function Projects() {
   const [activeFilter, setActiveFilter] = useState("Semua");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [fullscreenProjectImage, setFullscreenProjectImage] = useState<string | null>(null);
-  const [visibleCount, setVisibleCount] = useState(3);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(6);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect screen size to handle responsive pagination
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Reset pagination saat filter berganti
   React.useEffect(() => {
-    setVisibleCount(3);
+    setVisibleCount(6);
   }, [activeFilter]);
 
   // Fungsi untuk memetakan kategori project (string) ke Tab Filter
@@ -120,12 +131,23 @@ export default function Projects() {
     return styles[color];
   };
 
+  // Urutkan proyek: proyek dengan nilai 'order' tampil lebih dulu (1, 2, 3...), sisanya menyusul berdasarkan ID
+  const sortedProjectsData = [...projectsData].sort((a, b) => {
+    const orderA = a.order ?? Infinity;
+    const orderB = b.order ?? Infinity;
+    if (orderA !== orderB) return orderA - orderB;
+    return a.id - b.id;
+  });
+
   // Filter project yang ditampilkan
   const filteredProjects = activeFilter === "Semua" 
-    ? projectsData 
-    : projectsData.filter(p => getFilterCategory(p.category) === activeFilter);
+    ? sortedProjectsData 
+    : sortedProjectsData.filter(p => getFilterCategory(p.category) === activeFilter);
 
-  const displayedProjects = filteredProjects.slice(0, visibleCount);
+  // Tampilkan semua proyek pada desktop, batasi halaman (pagination) hanya pada layar mobile
+  const displayedProjects = isMobile 
+    ? filteredProjects.slice(0, visibleCount) 
+    : filteredProjects;
 
   const modalTheme = selectedProject ? getThemeStyles(selectedProject.themeColor) : null;
 
@@ -179,10 +201,14 @@ export default function Projects() {
                 <motion.div
                   key={project.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.95, y: 15 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -15 }}
-                  transition={{ duration: 0.25, delay: i * 0.04 }}
+                  initial={{ opacity: 0, y: 50, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -30, scale: 0.96 }}
+                  transition={{ 
+                    duration: 0.65, 
+                    ease: [0.16, 1, 0.3, 1], // Apple/Stripe-style easing for fluid speed
+                    delay: Math.min(i * 0.08, 0.8) // Beautiful cascade delay
+                  }}
                   className="h-full"
                 >
                   <PremiumProjectCard
@@ -203,11 +229,11 @@ export default function Projects() {
             </div>
           )}
 
-          {/* Load More Button */}
-          {visibleCount < filteredProjects.length && (
+          {/* Load More Button - Hanya muncul di Mobile */}
+          {isMobile && visibleCount < filteredProjects.length && (
             <div className="flex justify-center mt-10">
               <button
-                onClick={() => setVisibleCount(prev => prev + 3)}
+                onClick={() => setVisibleCount(prev => prev + 6)}
                 className="px-6 py-3 rounded-xl font-bold transition-all duration-300 border-2 border-black dark:border-white/20 bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-[4px_4px_0_0_#0f172a] hover:shadow-[6px_6px_0_0_#0f172a] hover:-translate-y-1 active:translate-y-0 active:shadow-[0_0_0_0_#0f172a] flex items-center gap-2"
               >
                 Muat Lebih Banyak
@@ -252,9 +278,18 @@ export default function Projects() {
                 </svg>
               </button>
 
-              {/* SISI KIRI: Galeri Gambar / Carousel (Dibuat adaptif untuk foto non-1:1 / landscape, lebih lebar 60%) */}
+              {/* SISI KIRI: Galeri Gambar / Carousel / Figma Embed (Dibuat adaptif untuk foto non-1:1 / landscape, lebih lebar 60%) */}
               <div className="w-full md:w-[60%] bg-slate-50 dark:bg-slate-900 border-b-[3px] md:border-b-0 md:border-r-[3px] border-slate-900 dark:border-white/10 p-6 flex flex-col items-center justify-center relative overflow-hidden h-[40vh] min-h-[300px] md:h-auto md:min-h-[500px] flex-shrink-0 md:sticky md:top-0">
-                {selectedProject.gallery && selectedProject.gallery.length > 0 ? (
+                {selectedProject.figmaEmbed ? (
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-slate-900 dark:border-slate-800 bg-white dark:bg-black shadow-md flex items-center justify-center w-full h-full">
+                    <iframe
+                      src={selectedProject.figmaEmbed}
+                      allowFullScreen
+                      className="absolute inset-0 w-full h-full border-0"
+                      title={`${selectedProject.title} Interactive Design`}
+                    />
+                  </div>
+                ) : selectedProject.gallery && selectedProject.gallery.length > 0 ? (
                   <div className="relative w-full h-full rounded-2xl overflow-hidden border-2 border-slate-900 dark:border-slate-800 bg-white dark:bg-black group shadow-md flex items-center justify-center">
                     
                     <AnimatePresence mode="wait">
@@ -283,21 +318,8 @@ export default function Projects() {
                           fill
                           className="object-contain relative z-10 cursor-zoom-in transition-transform hover:scale-[1.01]"
                           sizes="(max-width: 768px) 100vw, 800px"
-                          onClick={() => setFullscreenProjectImage(selectedProject.gallery![currentImageIndex])}
+                          onClick={() => setIsFullscreen(true)}
                         />
-
-                        {/* Hover Overlay Zoom Indicator */}
-                        <div 
-                          onClick={() => setFullscreenProjectImage(selectedProject.gallery![currentImageIndex])}
-                          className="absolute inset-0 z-20 flex items-center justify-center bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-zoom-in"
-                        >
-                          <div className="bg-slate-900/90 text-white dark:bg-sky-blue dark:text-slate-900 text-xs font-black px-4 py-2 rounded-xl border-2 border-black dark:border-sky-300 shadow-[3px_3px_0_0_#000] dark:shadow-none flex items-center gap-1.5 transform scale-90 group-hover:scale-100 transition-all duration-300 pointer-events-auto">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                            </svg>
-                            Klik untuk memperbesar
-                          </div>
-                        </div>
                       </motion.div>
                     </AnimatePresence>
 
@@ -357,26 +379,13 @@ export default function Projects() {
                       fill
                       className="object-contain relative z-10 cursor-zoom-in transition-transform hover:scale-[1.01]"
                       sizes="(max-width: 768px) 100vw, 800px"
-                      onClick={() => setFullscreenProjectImage(selectedProject.image || getPlaceholderImage(getFilterCategory(selectedProject.category)))}
+                      onClick={() => setIsFullscreen(true)}
                     />
-
-                    {/* Hover Overlay Zoom Indicator */}
-                    <div 
-                      onClick={() => setFullscreenProjectImage(selectedProject.image || getPlaceholderImage(getFilterCategory(selectedProject.category)))}
-                      className="absolute inset-0 z-20 flex items-center justify-center bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-zoom-in"
-                    >
-                      <div className="bg-slate-900/90 text-white dark:bg-sky-blue dark:text-slate-900 text-xs font-black px-4 py-2 rounded-xl border-2 border-black dark:border-sky-300 shadow-[3px_3px_0_0_#000] dark:shadow-none flex items-center gap-1.5 transform scale-90 group-hover:scale-100 transition-all duration-300 pointer-events-auto">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
-                        </svg>
-                        Klik untuk memperbesar
-                      </div>
-                    </div>
                   </div>
                 )}
 
-                {/* Thumbnails strip bawah (jika lebih dari 1 gambar) */}
-                {selectedProject.gallery && selectedProject.gallery.length > 1 && (
+                {/* Thumbnails strip bawah (jika lebih dari 1 gambar dan tidak memakai embed Figma) */}
+                {!selectedProject.figmaEmbed && selectedProject.gallery && selectedProject.gallery.length > 1 && (
                   <div className="flex gap-2 mt-4 overflow-x-auto w-full max-w-full pb-1 scrollbar-thin justify-start md:justify-center">
                     {selectedProject.gallery.map((img, idx) => (
                       <button
@@ -474,25 +483,49 @@ export default function Projects() {
 
       {/* Lightbox Resolusi Penuh Gambar Proyek (Poped-up) */}
       <AnimatePresence>
-        {fullscreenProjectImage && (
+        {isFullscreen && selectedProject && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[120] flex items-center justify-center bg-black/95 backdrop-blur-lg p-4 md:p-8"
-            onClick={() => setFullscreenProjectImage(null)}
+            onClick={() => setIsFullscreen(false)}
           >
             {/* Close Button */}
             <button
               className="absolute top-6 right-6 z-[130] p-3 bg-white/10 hover:bg-white/20 hover:text-red-400 text-white rounded-full backdrop-blur-md transition-all cursor-pointer hover:scale-105 active:scale-95"
-              onClick={() => setFullscreenProjectImage(null)}
+              onClick={() => setIsFullscreen(false)}
               aria-label="Tutup resolusi penuh"
             >
               <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
+
+            {/* Navigation Buttons for Fullscreen */}
+            {selectedProject.gallery && selectedProject.gallery.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => { e.stopPropagation(); setCurrentImageIndex((prev) => (prev === 0 ? selectedProject.gallery!.length - 1 : prev - 1)); }}
+                  className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border-2 border-white/20 flex items-center justify-center text-white shadow cursor-pointer transition-all hover:scale-105 active:scale-95 z-[130]"
+                  aria-label="Previous Image"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={(e) => { e.stopPropagation(); setCurrentImageIndex((prev) => (prev + 1) % selectedProject.gallery!.length); }}
+                  className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 border-2 border-white/20 flex items-center justify-center text-white shadow cursor-pointer transition-all hover:scale-105 active:scale-95 z-[130]"
+                  aria-label="Next Image"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </>
+            )}
 
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
@@ -502,13 +535,24 @@ export default function Projects() {
               className="relative max-w-7xl w-full h-[85vh] rounded-2xl overflow-hidden flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <Image
-                src={fullscreenProjectImage}
-                alt="Selected Project Full-size Photo"
-                fill
-                className="object-contain"
-                priority
-              />
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentImageIndex}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={selectedProject.gallery && selectedProject.gallery.length > 0 ? selectedProject.gallery[currentImageIndex] : (selectedProject.image || getPlaceholderImage(getFilterCategory(selectedProject.category)))}
+                    alt="Selected Project Full-size Photo"
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                </motion.div>
+              </AnimatePresence>
             </motion.div>
           </motion.div>
         )}

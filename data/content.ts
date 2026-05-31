@@ -10,8 +10,9 @@ export interface Project {
   image?: string;
   gallery?: string[];
   featured?: boolean;
-  featuredOrder?: number;
   themeColor?: "blue" | "green" | "purple" | "orange" | "pink";
+  figmaEmbed?: string;
+  order?: number;
 }
 
 export interface Experience {
@@ -28,13 +29,13 @@ export interface Experience {
 export const projectsData: Project[] = [
   {
     id: 1,
-    title: "Topic Modeling untuk Taksonomi Judul Berita (Skripsi)",
+    title: "Topic Modeling untuk Judul Berita Indonesia",
     category: "Data Science & NLP",
     role: "Data Scientist / NLP Engineer",
     description: "Merancang pipeline Natural Language Processing (NLP) end-to-end untuk memproses dan menganalisis lebih dari 100.000 data judul berita hasil scraping. Proyek ini bertujuan untuk memetakan struktur taksonomi teks secara otomatis.",
     techStack: ["Python", "Django", "Web Scraping", "NLP", "Machine Learning"],
     featured: true,
-    featuredOrder: 1,
+    order: 1,
     themeColor: "purple",
     highlights: [
       "Mengimplementasikan custom domain-based stopwords yang secara efektif menyaring noise jurnalistik.",
@@ -77,7 +78,7 @@ export const projectsData: Project[] = [
     description: "Berpartisipasi dalam kompetisi Microsoft Elevate Hackathon, membangun solusi digital kolaboratif dalam lingkungan kerja bertempo cepat (agile).",
     techStack: ["Front-End Development", "UI/UX Design", "System Integration"],
     featured: true,
-    featuredOrder: 2,
+    order: 2,
     themeColor: "pink",
     highlights: [
       "Merancang dan mengimplementasikan antarmuka (Front-End) yang sangat responsif dan berpusat pada pengalaman pengguna (User-Centric).",
@@ -133,7 +134,7 @@ export const projectsData: Project[] = [
     gallery: ["/projects/TRABALI1.png", "/projects/TRABALI2.png"],
     description: "Mendesain purwarupa (prototype) aplikasi mobile direktori pariwisata Bali dengan pendekatan desain modern, estetik, dan fungsional berbasis deteksi lokasi pengguna.",
     techStack: ["Figma", "Wireframing", "Prototyping", "UX Research"],
-    themeColor: "green",
+    themeColor: "orange",
     highlights: [
       "Fokus pada eksplorasi estetika antarmuka (UI) yang memikat dengan alur pengalaman pengguna (UX) yang intuitif."
     ]
@@ -159,11 +160,11 @@ export const projectsData: Project[] = [
     category: "Design & Research",
     role: "Visual Researcher",
     image: "/projects/TECHNOSTRESS1.png",
-    gallery: ["/projects/TECHNOSTRESS1.png", "/projects/TECHNOSTRESS2.png"],
+    gallery: ["/projects/TECHNOSTRESS1.png", "/projects/TECHNOSTRESS2.png", "/projects/TECHNOSTRESS3"],
     description: "Memenangkan juara pertama kompetisi tingkat nasional oleh BEM Psikologi Universitas Jayabaya lewat karya visual yang membahas dampak stres akibat penggunaan media digital berlebih.",
-    techStack: ["Graphic Design", "Psychological Research", "Data Storytelling"],
+    techStack: ["Graphic Design", "Psychological Research", "Data Storytelling", "Infographic"],
     featured: true,
-    featuredOrder: 3,
+    order: 3,
     themeColor: "orange",
     highlights: [
       "Menyajikan solusi berbasis riset yang kredibel lewat visualisasi data kreatif."
@@ -177,7 +178,7 @@ export const projectsData: Project[] = [
     image: "/projects/NYEPI.png",
     description: "Mengangkat topik kebudayaan di festival Litfest Brawijaya dengan menganalisis penghematan energi nasional (hingga Rp17,4 Miliar) selama Hari Raya Nyepi.",
     techStack: ["Data Journalism", "Information Design"],
-    themeColor: "green"
+    themeColor: "orange"
   },
   {
     id: 12,
@@ -209,18 +210,33 @@ export const projectsData: Project[] = [
   },
   {
     id: 15,
-    title: "Desain Konten & Feed Instagram KKN Desa Lebih",
+    title: "Desain Grafis Feed Instagram KKN-XXIX Desa Lebih",
     category: "Graphic Design & Branding",
-    role: "Content Creator & Graphic Designer",
+    role: "Graphic Designer",
     description: "Merancang identitas visual, template postingan, dan memproduksi konten kreatif untuk feed Instagram KKN Universitas Udayana di Desa Lebih, Gianyar. Fokus pada dokumentasi visual program kerja pengabdian secara komunikatif.",
     techStack: ["Adobe Illustrator", "Canva", "Social Media Branding", "Copywriting"],
     themeColor: "orange",
     featured: true,
-    featuredOrder: 4,
+    figmaEmbed: "https://embed.figma.com/design/kQKrN4UFzNxx7m8s9MorXX/KKN.LEBIH2024?node-id=22-2&embed-host=share",
     highlights: [
-      "Menyusun tata letak feed Instagram (grid 3x3) yang estetis, rapi, dan informatif untuk mendokumentasikan kegiatan pengabdian masyarakat.",
-      "Membuat materi publikasi digital program kerja unggulan desa dan kegiatan sosial kemasyarakatan.",
-      "Meningkatkan jangkauan informasi dan interaksi akun KKN Desa Lebih melalui konsistensi gaya desain visual yang ramah pembaca."
+      "Menyusun tata letak feed Instagram yang estetis, rapi, dan informatif untuk company profile dan kegiatan pengabdian masyarakat.",
+      "Memperkenalkan seluruh bagan keanggotaan dan program kerja melalui konsistensi gaya desain visual dan video."
+    ]
+  },
+  {
+    id: 16,
+    title: "Desain Grafis & Konten Feed Instagram PAKSI UDAYANA",
+    category: "Graphic Design & Branding",
+    role: "Kepala Bidang Jurnalistik",
+    description: "PAKSI UDAYANA adalah Unit Kegiatan Mahasiswa di lingkungan Fakultas Teknik yang bergerak dibidang antariksa",
+    techStack: ["Figma", "Adobe Premiere Pro", "Adobe Photoshop", "Social Media Branding", "Copywriting"],
+    themeColor: "orange",
+    featured: true,
+    figmaEmbed: "",
+    highlights: [
+      "Menyusun tata letak feed Instagram yang estetis, rapi, dan informatif untuk company profile dan kegiatan PAKSI UDAYANA.",
+      "Memperkenalkan seluruh bagan keanggotaan dan program kerja melalui konsistensi gaya desain visual dan video.",
+      "Membuat Desain Baju, Jacket, Poster untuk menggait minat mahasiswa baru untuk bergabung dengan Organisasi"
     ]
   }
 ];
@@ -297,11 +313,6 @@ export const organizationsData: Experience[] = [
   }
 ];
 
-import thumb7 from "@/app/gallery/pictures/thumbnails/pic7.jpg";
-import thumb8 from "@/app/gallery/pictures/thumbnails/pic8.jpg";
-import thumb9 from "@/app/gallery/pictures/thumbnails/pic9.jpg";
-import thumb10 from "@/app/gallery/pictures/thumbnails/pic10.jpg";
-
 export const committeesData: Experience[] = [
   {
     id: 1,
@@ -330,7 +341,7 @@ export const committeesData: Experience[] = [
     role: "Master of Ceremony (MC) - Sie Acara",
     organization: "Pelatihan Jurnalistik Mahasiswa (PJM)",
     logo: "/logos/LOGOMAESTRO.jpg",
-    gallery: [thumb7.src, thumb8.src, thumb9.src, thumb10.src],
+    gallery: ["/gallery/PJM-MC01.jpg", "/gallery/PJM-MC02.jpg", "/gallery/PJM-MC03.jpg", "/gallery/PJM-MC04.jpg"],
     period: "2022",
     description: "Memandu seluruh rangkaian sesi pelatihan secara profesional.",
     responsibilities: [

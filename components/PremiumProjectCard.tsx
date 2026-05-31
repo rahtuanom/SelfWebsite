@@ -167,17 +167,6 @@ export default function PremiumProjectCard({ project, onOpenDetails }: PremiumPr
           />
           {/* Subtle Dark Layer */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-40 group-hover/img:opacity-20 transition-opacity duration-300" />
-          
-          {/* Interactive Hint Indicator */}
-          <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 pointer-events-none">
-            <div className={`text-[10px] font-extrabold px-3 py-1.5 rounded-lg border flex items-center gap-1 transform translate-y-1.5 group-hover/img:translate-y-0 transition-all duration-300 pointer-events-auto ${theme.hoverEye}`}>
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-              </svg>
-              Detail Proyek
-            </div>
-          </div>
         </figure>
 
         {/* Card Content Padat */}

@@ -151,7 +151,7 @@ export default function Contact() {
                 <div className="h-16 md:h-20 w-full relative shrink-0 overflow-hidden">
                   <motion.div
                     animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                     className="absolute inset-0 bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888]"
                     style={{ backgroundSize: "200% 200%" }}
                   />

@@ -34,6 +34,10 @@ export default function DotField({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Skip canvas animation on mobile/touch devices — cursor interaction is irrelevant
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+    if (isTouch) return;
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 

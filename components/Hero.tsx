@@ -179,7 +179,7 @@ export default function Hero() {
           <div className="absolute bottom-0 flex items-end justify-center pointer-events-none" style={{ transform: "translateZ(-50px)" }}>
             <Image
               src={profilePic}
-              alt="Profile Photo"
+              alt="I Gusti Ngurah Anom Hariyadi — Data Scientist & Web Developer"
               width={450}
               height={450}
               className="object-contain drop-shadow-2xl"
@@ -232,7 +232,7 @@ export default function Hero() {
         transition={{ duration: 0.8, delay: 0.6 }}
       >
         <a
-          href="/CV_I Gusti Ngurah Anom Hariyadi.pdf"
+          href="/CV_I%20Gusti%20Ngurah%20Anom%20Hariyadi.pdf"
           download
           className="px-6 py-3 md:px-8 md:py-3 rounded-none dark:rounded-full font-bold transition-all duration-200 bg-cyan-400 dark:bg-sky-400 text-black dark:text-white shadow-[4px_4px_0px_0px_#000] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] dark:shadow-md dark:hover:shadow-lg dark:hover:-translate-y-1 dark:hover:translate-x-0 flex items-center gap-2 border-[3px] border-black dark:border-transparent z-50 relative"
         >

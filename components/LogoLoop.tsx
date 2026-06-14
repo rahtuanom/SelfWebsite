@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiPython, SiPytorch, SiLinux, SiGit, SiDocker, SiFigma, SiDjango, SiKotlin } from "react-icons/si";
 
 interface LogoItem {
@@ -19,6 +19,21 @@ export default function LogoLoop({
   speed = 30,
   className = "",
 }: LogoLoopProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Pause marquee when off-screen to save CPU
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   // Curated premium tech stack icons using clean, precise SVGs from react-icons
   const techLogos: LogoItem[] = [
     { name: "React", icon: <SiReact className="w-6 h-6 text-[#61dafb]" /> },
@@ -39,7 +54,7 @@ export default function LogoLoop({
   const duplicatedLogos = [...techLogos, ...techLogos];
 
   return (
-    <div className={`relative w-full overflow-hidden py-5 flex items-center select-none ${className}`}>
+    <div ref={containerRef} className={`relative w-full overflow-hidden py-5 flex items-center select-none ${className}`}>
       {/* Soft edge blur layers for ultra premium feeling */}
       <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white via-white/80 to-transparent dark:from-slate-950 dark:via-slate-950/80 z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white via-white/80 to-transparent dark:from-slate-950 dark:via-slate-950/80 z-10 pointer-events-none" />
@@ -50,6 +65,7 @@ export default function LogoLoop({
         style={{
           animationDuration: `${speed}s`,
           animationDirection: direction === "right" ? "reverse" : "normal",
+          animationPlayState: isVisible ? "running" : "paused",
         }}
       >
         {duplicatedLogos.map((tech, idx) => (

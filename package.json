@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "npm run compress:gallery",
     "dev": "next dev",
+    "prebuild": "npm run compress:gallery",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "compress:gallery": "node scripts/compress-gallery.js"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",

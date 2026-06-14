@@ -123,7 +123,7 @@ export default function ClickSpark({
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-full h-full pointer-events-none z-[9999]"
+      className="fixed inset-0 w-full h-full pointer-events-none z-[60]"
       style={{ mixBlendMode: "normal" }}
     />
   );

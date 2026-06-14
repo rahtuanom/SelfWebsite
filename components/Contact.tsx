@@ -150,7 +150,8 @@ export default function Contact() {
                 {/* Banner Background (Animated Instagram Aurora Gradient) */}
                 <div className="h-16 md:h-20 w-full relative shrink-0 overflow-hidden">
                   <motion.div
-                    animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                    whileInView={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                    viewport={{ once: false }}
                     transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                     className="absolute inset-0 bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888]"
                     style={{ backgroundSize: "200% 200%" }}

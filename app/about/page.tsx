@@ -1,5 +1,15 @@
+import type { Metadata } from "next";
 import PageTransition from "@/components/PageTransition";
 import ExperienceBento from "@/components/ExperienceBento";
+
+export const metadata: Metadata = {
+  title: "Tentang Saya — Profil, Skill & Pengalaman Organisasi",
+  description: "Profil lengkap I Gusti Ngurah Anom Hariyadi (Anom): Data Scientist, Web Developer, Graphic Designer. Core skills: Data Science, Machine Learning, NLP, Next.js, TypeScript, Adobe CC, Linux. Pengalaman organisasi di PAKSI Udayana, HMTI, ROBOTEC, dan kepanitiaan tingkat universitas.",
+  openGraph: {
+    title: "Tentang Anom Hariyadi — Profil & Skill",
+    description: "Data Scientist & Web Developer lulusan TI Udayana. Lihat profil lengkap, core skills, dan pengalaman organisasi.",
+  },
+};
 
 export default function About() {
   return (

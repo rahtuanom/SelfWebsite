@@ -196,14 +196,7 @@ export default function Navbar() {
       {/* ═══════════════════════════════════════════════
           MOBILE NAVBAR (hidden on desktop)
           ═══════════════════════════════════════════════ */}
-      <motion.div
-        variants={{
-          visible: { y: 0, opacity: 1 },
-          hidden: { y: "150%", opacity: 0 },
-        }}
-        initial="visible"
-        animate={hidden ? "hidden" : "visible"}
-        transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
+      <div
         className="block md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-max px-4"
       >
         <Dock 
@@ -212,7 +205,7 @@ export default function Navbar() {
           baseItemSize={48} 
           magnification={64} 
         />
-      </motion.div>
+      </div>
     </>
   );
 }

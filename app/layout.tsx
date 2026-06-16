@@ -118,7 +118,7 @@ export default function RootLayout({
           <BackgroundOrnaments />
           <ClickSpark />
           <Navbar />
-          <div className="flex-grow flex flex-col pt-24 z-10 relative">
+          <div className="flex-grow flex flex-col pt-24 pb-24 md:pb-0 z-10 relative">
             {children}
           </div>
           <Footer />

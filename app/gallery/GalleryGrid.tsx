@@ -201,7 +201,7 @@ export default function GalleryGrid({ initialImages }: { initialImages: ImageIte
           >
             {/* Close Button - Premium Neo-Brutalist Border */}
             <button
-              className="absolute top-4 right-4 z-[130] p-3 bg-white text-slate-900 border-[2.5px] border-slate-900 shadow-[3px_3px_0px_0px_#0f172a] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1.5px_1.5px_0px_0px_#0f172a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[0px_0px_0px_0px_#0f172a] rounded-xl transition-all flex items-center justify-center cursor-pointer"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-[130] p-2.5 sm:p-3 bg-white text-slate-900 border-[2.5px] border-slate-900 shadow-[3px_3px_0px_0px_#0f172a] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1.5px_1.5px_0px_0px_#0f172a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[0px_0px_0px_0px_#0f172a] rounded-xl transition-all flex items-center justify-center cursor-pointer"
               onClick={() => setSelectedIndex(null)}
               aria-label="Close"
             >
@@ -210,7 +210,7 @@ export default function GalleryGrid({ initialImages }: { initialImages: ImageIte
 
             {/* Prev Image Button */}
             <button
-              className="absolute left-2 sm:left-4 z-[130] p-3 bg-white text-slate-900 border-[2.5px] border-slate-900 shadow-[3px_3px_0px_0px_#0f172a] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1.5px_1.5px_0px_0px_#0f172a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[0px_0px_0px_0px_#0f172a] rounded-xl transition-all flex items-center justify-center cursor-pointer"
+              className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 z-[130] p-2.5 sm:p-3 bg-white text-slate-900 border-[2.5px] border-slate-900 shadow-[3px_3px_0px_0px_#0f172a] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1.5px_1.5px_0px_0px_#0f172a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[0px_0px_0px_0px_#0f172a] rounded-xl transition-all flex items-center justify-center cursor-pointer"
               onClick={handlePrev}
               aria-label="Previous image"
             >
@@ -219,7 +219,7 @@ export default function GalleryGrid({ initialImages }: { initialImages: ImageIte
 
             {/* Next Image Button */}
             <button
-              className="absolute right-2 sm:right-4 z-[130] p-3 bg-white text-slate-900 border-[2.5px] border-slate-900 shadow-[3px_3px_0px_0px_#0f172a] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1.5px_1.5px_0px_0px_#0f172a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[0px_0px_0px_0px_#0f172a] rounded-xl transition-all flex items-center justify-center cursor-pointer"
+              className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 z-[130] p-2.5 sm:p-3 bg-white text-slate-900 border-[2.5px] border-slate-900 shadow-[3px_3px_0px_0px_#0f172a] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1.5px_1.5px_0px_0px_#0f172a] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[0px_0px_0px_0px_#0f172a] rounded-xl transition-all flex items-center justify-center cursor-pointer"
               onClick={handleNext}
               aria-label="Next image"
             >

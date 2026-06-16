@@ -206,7 +206,7 @@ export default function Contact() {
               neobrutalistHoverShadow="hover:shadow-[6px_6px_0_0_#ea4335]"
               className="h-full"
             >
-              <Link href="mailto:rahtuanom@gmail.com" className="group flex flex-col justify-between h-full p-6 transition-all duration-300 dark:bg-black/20">
+              <Link href="mailto:rahtuanom@gmail.com" className="group flex flex-col justify-between h-full p-4 md:p-6 transition-all duration-300 dark:bg-black/20">
                 <div className="w-12 h-12 rounded-xl bg-red-100 text-red-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 dark:bg-red-500/20">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <rect width="20" height="16" x="2" y="4" rx="2"></rect>
@@ -223,7 +223,7 @@ export default function Contact() {
 
           {/* GitHub Card */}
           <motion.div variants={itemVariants} className="col-span-1 md:col-span-2 h-full">
-            <Link href="https://github.com/rahtuanom" target="_blank" className="group flex flex-col justify-between h-full p-6 rounded-2xl transition-all duration-300 bg-slate-900 border-2 border-slate-900 text-white shadow-[4px_4px_0_0_#0f172a] hover:shadow-[6px_6px_0_0_#333] hover:-translate-y-1 dark:bg-slate-900 dark:backdrop-blur-xl dark:border-white/10 dark:shadow-md dark:hover:shadow-xl dark:hover:border-slate-500">
+            <Link href="https://github.com/rahtuanom" target="_blank" className="group flex flex-col justify-between h-full p-4 md:p-6 rounded-2xl transition-all duration-300 bg-slate-900 border-2 border-slate-900 text-white shadow-[4px_4px_0_0_#0f172a] hover:shadow-[6px_6px_0_0_#333] hover:-translate-y-1 dark:bg-slate-900 dark:backdrop-blur-xl dark:border-white/10 dark:shadow-md dark:hover:shadow-xl dark:hover:border-slate-500">
               <div className="w-12 h-12 rounded-xl bg-white/10 text-white flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
@@ -245,7 +245,7 @@ export default function Contact() {
               neobrutalistHoverShadow="hover:shadow-[6px_6px_0_0_#25D366]"
               className="h-full"
             >
-              <Link href="https://wa.me/62895367473629" target="_blank" className="group flex flex-col justify-between h-full p-6 transition-all duration-300 dark:bg-black/20">
+              <Link href="https://wa.me/62895367473629" target="_blank" className="group flex flex-col justify-between h-full p-4 md:p-6 transition-all duration-300 dark:bg-black/20">
                 <div className="w-12 h-12 rounded-xl bg-green-100 text-[#25D366] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 dark:bg-[#25D366]/20">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>

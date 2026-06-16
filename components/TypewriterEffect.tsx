@@ -92,13 +92,13 @@ export default function TypewriterEffect() {
 
   return (
     <div className="flex flex-col items-start leading-[1.15] font-mono tracking-tight select-none">
-      <span className={`text-4xl md:text-5xl font-black ${getLine1Color()} transition-colors duration-300`}>
+      <span className={`text-2xl sm:text-3xl md:text-5xl font-black ${getLine1Color()} transition-colors duration-300`}>
         {line1}
         {phase !== 0 && phase !== 1 && phase !== 2 && phase !== 3 && phase !== 4 && (
           <span className="animate-pulse text-royal-blue dark:text-sky-blue ml-0.5">_</span>
         )}
       </span>
-      <span className={`text-4xl md:text-5xl font-black ${getLine2Color()} transition-colors duration-300`}>
+      <span className={`text-2xl sm:text-3xl md:text-5xl font-black ${getLine2Color()} transition-colors duration-300`}>
         {line2}
         {(phase === 0 || phase === 1 || phase === 2 || phase === 3 || phase === 4) && (
           <span className="animate-pulse text-royal-blue dark:text-sky-blue ml-0.5">_</span>

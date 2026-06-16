@@ -45,7 +45,7 @@ export default function ExperienceBento() {
   return (
     <>
       {/* Container Bento Experience Utama */}
-      <div className="md:col-span-1 lg:col-span-3 p-8 md:p-10 rounded-3xl transition-all duration-300 bg-white border-2 border-slate-900 shadow-[6px_6px_0_0_#0f172a] dark:bg-black/40 dark:backdrop-blur-xl dark:border-white/10 dark:shadow-xl relative w-full">
+      <div className="md:col-span-1 lg:col-span-3 p-5 md:p-8 lg:p-10 rounded-3xl transition-all duration-300 bg-white border-2 border-slate-900 shadow-[6px_6px_0_0_#0f172a] dark:bg-black/40 dark:backdrop-blur-xl dark:border-white/10 dark:shadow-xl relative w-full">
         
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b-2 border-slate-100 dark:border-white/10">
           <div>

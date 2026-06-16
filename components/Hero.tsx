@@ -34,7 +34,7 @@ export default function Hero() {
   const [isPhotoHovered, setIsPhotoHovered] = useState(false);
 
   return (
-    <section ref={heroRef} className="relative w-full h-screen flex flex-col items-center justify-start overflow-hidden px-6 pt-24 pb-0 -mt-24">
+    <section ref={heroRef} className="relative w-full min-h-screen md:h-screen flex flex-col items-center justify-start overflow-hidden px-4 sm:px-6 pt-24 pb-28 md:pb-0 -mt-24">
 
       {/* Dark Mode Aurora Background - Hanya render saat Hero terlihat (isInView) */}
       {mounted && theme === "dark" && isInView && (
@@ -82,7 +82,7 @@ export default function Hero() {
 
       {/* 1. TOP CENTER: Main Text & Badge */}
       <motion.div
-        className="relative text-center flex flex-col items-center z-10 mt-8 md:mt-12"
+        className="relative text-center flex flex-col items-center z-10 mt-6 sm:mt-8 md:mt-12"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -96,7 +96,7 @@ export default function Hero() {
           </svg>
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-black text-foreground tracking-tight">
+        <h1 className="text-3xl sm:text-5xl md:text-7xl font-black text-foreground tracking-tight">
           I'm <span className="text-blue-500 dark:text-sky-blue">Rahtu Anom,</span>
         </h1>
 
@@ -107,27 +107,28 @@ export default function Hero() {
         </svg>
       </motion.div>
 
-      {/* 2. MIDDLE (ABSOLUTE): Left Description & Right Typewriter */}
-      <div className="absolute inset-0 flex flex-col md:flex-row items-center justify-between z-10 max-w-7xl mx-auto w-full px-6 pointer-events-none mt-40 md:mt-0">
+      {/* 2. MIDDLE: Left Description & Right Typewriter */}
+      {/* Mobile: flow layout (relative), Desktop: absolute side-by-side */}
+      <div className="relative md:absolute md:inset-0 flex flex-col md:flex-row items-center justify-between z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 mt-4 md:mt-0 gap-4 md:gap-0">
 
-        {/* Left Side: Description */}
+        {/* Left Side: Description — shown SECOND on mobile (order-2) */}
         <motion.div
-          className="flex justify-start items-center text-left pointer-events-auto w-full md:w-auto mt-32 md:mt-0"
+          className="flex justify-center md:justify-start items-center text-center md:text-left w-full md:w-auto order-2 md:order-1"
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <div className="max-w-xs relative pl-6 md:pl-0">
-            <div className="text-5xl text-slate-400 dark:text-slate-500 mb-1 font-serif leading-none opacity-50 absolute -top-6 left-0 md:-left-6">“</div>
-            <p className="text-sm text-slate-700 dark:text-slate-300 font-medium leading-relaxed relative z-10">
+          <div className="max-w-xs relative px-2 md:pl-0 md:pr-0">
+            <div className="text-5xl text-slate-400 dark:text-slate-500 mb-1 font-serif leading-none opacity-50 absolute -top-6 left-0 md:-left-6 hidden md:block">“</div>
+            <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium leading-relaxed relative z-10">
               Data Scientist lulusan TI Udayana yang dinamis dengan keahlian Linux otodidak yang lahir dari adaptabilitas perangkat keras (<em>laptop kentang</em>). Berpengalaman nyata dalam Web Dev, Desain Grafis, dan Fotografi.
             </p>
           </div>
         </motion.div>
 
-        {/* Right Side: Typewriter */}
+        {/* Right Side: Typewriter — shown FIRST on mobile (order-1) */}
         <motion.div
-          className="flex justify-end items-center pointer-events-auto w-full md:w-auto mt-8 md:mt-0"
+          className="flex justify-center md:justify-end items-center w-full md:w-auto order-1 md:order-2"
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -138,9 +139,9 @@ export default function Hero() {
       </div>
 
       {/* HERO IMAGE */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 flex items-end justify-center pointer-events-none">
+      <div className="relative md:absolute md:bottom-0 left-1/2 -translate-x-1/2 z-20 flex items-end justify-center pointer-events-none mt-4 md:mt-0">
         <motion.div
-          className="relative flex items-center justify-center h-72 w-72 md:h-[450px] md:w-[450px] pointer-events-auto"
+          className="relative flex items-center justify-center h-48 w-48 sm:h-56 sm:w-56 md:h-[450px] md:w-[450px] pointer-events-auto"
           style={{ perspective: "1000px", transformStyle: "preserve-3d", willChange: "auto" }}
           animate={{ scale: isPhotoHovered ? 1.05 : 1, y: isPhotoHovered ? -10 : 0 }}
           transition={{ duration: 0.4, type: "spring", stiffness: 200, damping: 20 }}
@@ -187,9 +188,9 @@ export default function Hero() {
             />
           </div>
 
-          {/* 3D Halo Text Effect */}
+          {/* 3D Halo Text Effect — hidden on mobile (380px diameter overflows 360px screens) */}
           <div
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            className="absolute inset-0 hidden md:flex items-center justify-center pointer-events-none"
             style={{
               transformStyle: "preserve-3d",
               transform: "rotateX(-10deg) rotateZ(5deg) translateY(-30px)",
@@ -224,9 +225,9 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* BUTTON GROUP (Placed at absolute bottom, overlapping the chest of the photo) */}
+      {/* BUTTON GROUP */}
       <motion.div
-        className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 flex items-center p-2 rounded-none dark:rounded-full border-[3px] border-black dark:border-white/10 bg-white dark:bg-black/60 dark:backdrop-blur-md shadow-[8px_8px_0px_0px_#000] dark:shadow-2xl z-40 pointer-events-auto"
+        className="relative md:absolute md:bottom-12 left-1/2 -translate-x-1/2 flex items-center p-1.5 sm:p-2 rounded-none dark:rounded-full border-[3px] border-black dark:border-white/10 bg-white dark:bg-black/60 dark:backdrop-blur-md shadow-[6px_6px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] dark:shadow-2xl z-40 pointer-events-auto mt-4 md:mt-0"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.6 }}
@@ -234,7 +235,7 @@ export default function Hero() {
         <a
           href="/CV_I%20Gusti%20Ngurah%20Anom%20Hariyadi.pdf"
           download
-          className="px-6 py-3 md:px-8 md:py-3 rounded-none dark:rounded-full font-bold transition-all duration-200 bg-cyan-400 dark:bg-sky-400 text-black dark:text-white shadow-[4px_4px_0px_0px_#000] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] dark:shadow-md dark:hover:shadow-lg dark:hover:-translate-y-1 dark:hover:translate-x-0 flex items-center gap-2 border-[3px] border-black dark:border-transparent z-50 relative"
+          className="px-4 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3 text-sm sm:text-base rounded-none dark:rounded-full font-bold transition-all duration-200 bg-cyan-400 dark:bg-sky-400 text-black dark:text-white shadow-[4px_4px_0px_0px_#000] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] dark:shadow-md dark:hover:shadow-lg dark:hover:-translate-y-1 dark:hover:translate-x-0 flex items-center gap-2 border-[3px] border-black dark:border-transparent z-50 relative"
         >
           Download CV
           <svg
@@ -245,7 +246,7 @@ export default function Hero() {
           </svg>
         </a>
 
-        <Link href="/projects" className="px-6 py-3 md:px-8 md:py-3 rounded-none dark:rounded-full font-bold transition-all duration-200 text-black dark:text-slate-300 hover:bg-pink-400 border-[3px] border-transparent hover:border-black hover:shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 dark:hover:bg-transparent dark:hover:border-transparent dark:hover:shadow-none dark:hover:-translate-y-0 dark:hover:text-white">
+        <Link href="/projects" className="px-4 py-2.5 sm:px-6 sm:py-3 md:px-8 md:py-3 text-sm sm:text-base rounded-none dark:rounded-full font-bold transition-all duration-200 text-black dark:text-slate-300 hover:bg-pink-400 border-[3px] border-transparent hover:border-black hover:shadow-[4px_4px_0px_0px_#000] hover:-translate-y-1 dark:hover:bg-transparent dark:hover:border-transparent dark:hover:shadow-none dark:hover:-translate-y-0 dark:hover:text-white">
           Portfolio ↗
         </Link>
       </motion.div>

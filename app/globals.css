@@ -31,3 +31,40 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), sans-serif;
 }
+
+/* Preloader Animations & Styles */
+@keyframes preloader-word-1 {
+  0% { opacity: 0; transform: translateY(15px); }
+  8% { opacity: 1; transform: translateY(0); }
+  28% { opacity: 1; transform: translateY(0); }
+  33% { opacity: 0; transform: translateY(-15px); }
+  100% { opacity: 0; transform: translateY(-15px); }
+}
+
+@keyframes preloader-word-2 {
+  0% { opacity: 0; transform: translateY(15px); }
+  33% { opacity: 0; transform: translateY(15px); }
+  41% { opacity: 1; transform: translateY(0); }
+  61% { opacity: 1; transform: translateY(0); }
+  66% { opacity: 0; transform: translateY(-15px); }
+  100% { opacity: 0; transform: translateY(-15px); }
+}
+
+@keyframes preloader-word-3 {
+  0% { opacity: 0; transform: translateY(15px); }
+  66% { opacity: 0; transform: translateY(15px); }
+  74% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.preloader-greeting-1 {
+  animation: preloader-word-1 3s forwards;
+}
+
+.preloader-greeting-2 {
+  animation: preloader-word-2 3s forwards;
+}
+
+.preloader-greeting-3 {
+  animation: preloader-word-3 3s forwards;
+}

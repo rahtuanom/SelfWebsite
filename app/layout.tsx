@@ -7,6 +7,7 @@ import BackgroundOrnaments from "@/components/BackgroundOrnaments";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ClickSpark from "@/components/ClickSpark";
 import Script from "next/script";
+import Preloader from "@/components/Preloader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -115,6 +116,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-500 relative">
         <ThemeProvider attribute="class" defaultTheme="light">
+          <Preloader />
           <BackgroundOrnaments />
           <ClickSpark />
           <Navbar />

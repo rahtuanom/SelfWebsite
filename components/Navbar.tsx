@@ -19,6 +19,8 @@ const navItems = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  // Normalisasi pathname agar kompatibel dengan trailingSlash: true di hosting statis
+  const normalizedPathname = pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
   const router = useRouter();
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
   const { scrollY } = useScroll();
@@ -70,25 +72,25 @@ export default function Navbar() {
       icon: <Home size={20} />, 
       label: "Home", 
       onClick: () => router.push("/"),
-      isActive: pathname === "/" 
+      isActive: normalizedPathname === "/" 
     },
     { 
       icon: <User size={20} />, 
       label: "About", 
       onClick: () => router.push("/about"),
-      isActive: pathname === "/about" 
+      isActive: normalizedPathname === "/about" 
     },
     { 
       icon: <Briefcase size={20} />, 
       label: "Projects", 
       onClick: () => router.push("/projects"),
-      isActive: pathname === "/projects" 
+      isActive: normalizedPathname === "/projects" 
     },
     { 
       icon: <ImageIcon size={20} />, 
       label: "Gallery", 
       onClick: () => router.push("/gallery"),
-      isActive: pathname === "/gallery" 
+      isActive: normalizedPathname === "/gallery" 
     },
     {
       icon: isDark ? <Sun size={20} /> : <Moon size={20} />,
@@ -124,7 +126,7 @@ export default function Navbar() {
             >
               <PillNav
                 items={navItems}
-                activeHref={pathname}
+                activeHref={normalizedPathname}
                 ease="power3.easeOut"
                 baseColor={baseColor}
                 pillColor={pillColor}
@@ -145,7 +147,7 @@ export default function Navbar() {
             >
               <ul className="flex items-center gap-6 relative">
                 {navItems.map((item) => {
-                  const isActive = pathname === item.path;
+                  const isActive = normalizedPathname === item.path;
 
                   return (
                     <li key={item.path} className="relative">

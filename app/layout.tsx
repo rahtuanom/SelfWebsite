@@ -7,6 +7,7 @@ import BackgroundOrnaments from "@/components/BackgroundOrnaments";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import ClickSpark from "@/components/ClickSpark";
 import Script from "next/script";
+import PreloaderController from "@/components/PreloaderController";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -107,6 +108,16 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${urbanist.variable} h-full antialiased font-sans`}
     >
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if (sessionStorage.getItem("hasLoaded") === "true") {
+                document.write('<style>#preloader-root { display: none !important; }</style>');
+              }
+            `,
+          }}
+        />
+
         <Script
           id="json-ld-person"
           type="application/ld+json"
@@ -114,7 +125,105 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-500 relative">
+        {/* Preloader Statis (Pure HTML/CSS) untuk rendering instan tanpa jeda blank putih */}
+        <div
+          id="preloader-root"
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "#ffffff",
+            zIndex: 9999,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "2rem",
+            color: "#09090b",
+            fontFamily: "sans-serif",
+            transition: "transform 0.8s cubic-bezier(0.76, 0, 0.24, 1)",
+            opacity: 1,
+            pointerEvents: "auto",
+          }}
+        >
+          {/* Konten Terpusat Rapat */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "100%", maxWidth: "24rem" }}>
+            {/* Nama Atas */}
+            <div style={{ fontSize: "11px", letterSpacing: "0.25em", color: "#71717a", fontFamily: "monospace", textTransform: "uppercase", fontWeight: 500 }}>
+              Anom Hariyadi
+            </div>
+
+            {/* Sapaan Multibahasa Terpusat dengan Animasi CSS Keyframes */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative", minHeight: "6rem", width: "100%", margin: "1.25rem 0" }}>
+              <div
+                className="preloader-greeting-1"
+                style={{
+                  fontSize: "clamp(2rem, 8vw, 3.5rem)",
+                  fontWeight: 700,
+                  letterSpacing: "-0.02em",
+                  color: "#09090b",
+                  fontFamily: "sans-serif",
+                  whiteSpace: "nowrap",
+                  position: "absolute",
+                  opacity: 0,
+                  transform: "translateY(15px)",
+                }}
+              >
+                Hello 👋
+              </div>
+              <div
+                className="preloader-greeting-2"
+                style={{
+                  fontSize: "clamp(2rem, 8vw, 3.5rem)",
+                  fontWeight: 700,
+                  letterSpacing: "-0.02em",
+                  color: "#09090b",
+                  fontFamily: "sans-serif",
+                  whiteSpace: "nowrap",
+                  position: "absolute",
+                  opacity: 0,
+                  transform: "translateY(15px)",
+                }}
+              >
+                Om Swastyastu 🙏
+              </div>
+              <div
+                className="preloader-greeting-3"
+                style={{
+                  fontSize: "clamp(2rem, 8vw, 3.5rem)",
+                  fontWeight: 700,
+                  letterSpacing: "-0.02em",
+                  color: "#09090b",
+                  fontFamily: "sans-serif",
+                  whiteSpace: "nowrap",
+                  position: "absolute",
+                  opacity: 0,
+                  transform: "translateY(15px)",
+                }}
+              >
+                Welcome 🚀
+              </div>
+            </div>
+
+            {/* Progress Bar & Persentase Berdampingan Rapat */}
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", width: "100%", maxWidth: "16rem", color: "#71717a", fontFamily: "monospace", fontSize: "11px" }}>
+              <div style={{ flexGrow: 1, height: "2px", background: "#f4f4f5", overflow: "hidden", position: "relative", borderRadius: "9999px" }}>
+                <div
+                  id="preloader-bar"
+                  style={{
+                    height: "100%",
+                    width: "0%",
+                    background: "#6366f1",
+                    transition: "width 30ms linear",
+                  }}
+                />
+              </div>
+              <div id="preloader-percent" style={{ fontWeight: 600, minWidth: "2.5rem", textAlign: "right" }}>000%</div>
+            </div>
+          </div>
+        </div>
+
         <ThemeProvider attribute="class" defaultTheme="light">
+          <PreloaderController />
           <BackgroundOrnaments />
           <ClickSpark />
           <Navbar />

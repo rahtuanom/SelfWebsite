@@ -11,10 +11,10 @@ export default function PreloaderController() {
     // Jika preloader tidak ada di DOM, hentikan
     if (!preloader) return;
 
-    // Jika sudah pernah dimuat di sesi ini, langsung hapus elemen secara instan
+    // Jika sudah pernah dimuat di sesi ini, langsung sembunyikan elemen secara instan
     const hasLoaded = sessionStorage.getItem("hasLoaded");
     if (hasLoaded === "true") {
-      preloader.remove();
+      preloader.style.display = "none";
       return;
     }
 
@@ -41,9 +41,9 @@ export default function PreloaderController() {
           // Pulihkan scroll body
           document.body.style.overflow = "";
 
-          // Hapus elemen preloader dari DOM setelah animasi slide-up (800ms) selesai
+          // Sembunyikan elemen preloader setelah animasi slide-up (800ms) selesai agar tidak menghalangi interaksi dan aman dari rekonsiliasi React
           setTimeout(() => {
-            preloader.remove();
+            preloader.style.display = "none";
           }, 850);
         }, 150);
       }

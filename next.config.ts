@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   // Aktifkan export statis (wajib untuk GitHub Pages)
   output: "export",
   
+  // Memastikan path berakhiran slash agar kompatibel dengan GitHub Pages dan mencegah bug client routing
+  trailingSlash: true,
+  
   // Menonaktifkan optimasi image default karena export statis tidak mendukungnya
   images: {
     unoptimized: true,

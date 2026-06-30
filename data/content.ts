@@ -61,20 +61,20 @@ export const projectsData: Project[] = [
       "Optimalisasi Pengambilan Keputusan: Menyediakan kerangka kerja analisis sentimen prediktif untuk meminimalkan risiko peluncuran produk dan meningkatkan retensi pemain."
     ]
   },
-  // {
-  //   id: 9,
-  //   title: "Sistem Informasi Rekam Medis Terintegrasi",
-  //   category: "Web Development",
-  //   role: "Full-Stack Developer",
-  //   description: "Proyek rekayasa perangkat lunak berbasis web yang berfokus pada pengembangan sistem informasi rekam medis terintegrasi untuk digitalisasi administrasi rumah sakit. Sistem ini memfasilitasi pengelolaan data pasien, riwayat medis, dan administrasi klinis secara dinamis, aman, dan real-time guna meningkatkan efisiensi operasional layanan kesehatan.",
-  //   techStack: ["HTML/CSS", "Bootstrap", "JavaScript", "Backend Integration"],
-  //   themeColor: "blue",
-  //   highlights: [
-  //     "Arsitektur Full-Stack Solid: Membangun sistem administrasi rekam medis dengan fungsionalitas CRUD (Create, Read, Update, Delete) yang responsif dan aman.",
-  //     "Pelaporan Otomatis Siap Cetak: Mengintegrasikan modul pencetakan data medis otomatis (print-ready) untuk mempercepat pelaporan administrasi klinis.",
-  //     "Manajemen Data Terpusat: Menyederhanakan pencarian dan pengelolaan riwayat medis pasien secara terpusat untuk meminimalkan human error."
-  //   ]
-  // },
+  {
+    id: 9,
+    title: "Sistem Informasi Rekam Medis Terintegrasi",
+    category: "Web Development",
+    role: "Full-Stack Developer",
+    description: "Proyek rekayasa perangkat lunak berbasis web yang berfokus pada pengembangan sistem informasi rekam medis terintegrasi untuk digitalisasi administrasi rumah sakit. Sistem ini memfasilitasi pengelolaan data pasien, riwayat medis, dan administrasi klinis secara dinamis, aman, dan real-time guna meningkatkan efisiensi operasional layanan kesehatan.",
+    techStack: ["HTML/CSS", "Bootstrap", "JavaScript", "Backend Integration"],
+    themeColor: "blue",
+    highlights: [
+      "Arsitektur Full-Stack Solid: Membangun sistem administrasi rekam medis dengan fungsionalitas CRUD (Create, Read, Update, Delete) yang responsif dan aman.",
+      "Pelaporan Otomatis Siap Cetak: Mengintegrasikan modul pencetakan data medis otomatis (print-ready) untuk mempercepat pelaporan administrasi klinis.",
+      "Manajemen Data Terpusat: Menyederhanakan pencarian dan pengelolaan riwayat medis pasien secara terpusat untuk meminimalkan human error."
+    ]
+  },
   {
     id: 4,
     title: "HaloHati - Microsoft Elevate Hackathon",

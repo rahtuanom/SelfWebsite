@@ -236,16 +236,16 @@ export const projectsData: Project[] = [
   },
   {
     id: 14,
-    title: "#JuaraVibeCoding (Ongoing)",
+    title: "Self Inventing & Vibe Coding",
     category: "Software Engineering",
     role: "Developer",
     description: "Inisiatif riset dan eksperimentasi teknologi berkelanjutan yang berfokus pada pemanfaatan Agentic AI dan perkakas pengembangan web modern dalam ekosistem Vibe Coding. Proyek ini bertujuan mendorong batas produktivitas rekayasa perangkat lunak melalui kolaborasi dinamis antara developer manusia dan asisten kecerdasan buatan.",
-    techStack: ["Agentic AI", "Modern Web Tech"],
+    techStack: ["Agentic AI", "Linux", "Windows", "C", "C++"],
     themeColor: "purple",
     highlights: [
       "Eksplorasi Agentic AI: Menguji efisiensi pengerjaan kode, debugging otomatis, dan pembuatan sistem menggunakan model bahasa besar terbaru.",
       "Implementasi Web Modern: Menerapkan teknologi mutakhir dalam pengembangan aplikasi web untuk memastikan adaptabilitas dan performa maksimal.",
-      "Pembelajaran Eksperimental: Mendokumentasikan teknik pengembangan cepat (rapid development) untuk menciptakan alur kerja coding masa depan."
+      "Eksperimental: Eksplorasi dalam pembuatan Linux dan Windows terminal yang berbasiskan bahasa pemrograman C dan bahasa pemrograman C++"
     ]
   },
   {
